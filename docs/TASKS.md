@@ -16,3 +16,6 @@ Status values: `Done`, `In Progress`, `Todo`, `Blocked`.
 | T9 | Deliver analytics & alerts features | Analytics | Done | `/analytics` dashboards and `/alerts` rule builder now live with export helpers. |
 | T10 | Run accessibility/performance pass and document QA | QA | Done | Skip link & reduced-motion polish shipped; manual runbook lives in `docs/QA-CHECKLIST.md`. |
 | T11 | Update README with project-specific instructions | Docs | Done | README now documents setup, feature surfaces, scripts, and QA checklist. |
+| T12 | Deliver zone readiness workspace | Operations | Done | `/zones` provides commander summary, hotspots, and map context. |
+| T13 | Launch data workspace for dataset oversight | Data | Done | `/data` lists assets, integrations, and export tooling. |
+

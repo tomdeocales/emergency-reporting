@@ -1,0 +1,60 @@
+{
+  "assets": [
+    {
+      "id": "asset-incidents",
+      "name": "Incident intake dataset",
+      "description": "Validated incident records imported from field CSV uploads.",
+      "recordCount": 1284,
+      "format": "csv",
+      "lastUpdated": "2024-03-18T15:35:00Z",
+      "owner": "Data Ops",
+      "tags": ["incidents", "operations"],
+      "retention": "90 days"
+    },
+    {
+      "id": "asset-zones",
+      "name": "Zone boundary polygons",
+      "description": "GeoJSON shapes defining response coverage areas.",
+      "recordCount": 18,
+      "format": "geojson",
+      "lastUpdated": "2024-03-10T10:12:00Z",
+      "owner": "GIS Team",
+      "tags": ["zones", "maps"],
+      "retention": "365 days"
+    },
+    {
+      "id": "asset-response-times",
+      "name": "Response time aggregates",
+      "description": "Hourly aggregates of dispatch to arrival metrics by zone and priority.",
+      "recordCount": 720,
+      "format": "parquet",
+      "lastUpdated": "2024-03-18T09:00:00Z",
+      "owner": "Analytics",
+      "tags": ["analytics", "sla"],
+      "retention": "180 days"
+    }
+  ],
+  "integrations": [
+    {
+      "id": "integration-cad",
+      "name": "Computer Aided Dispatch",
+      "status": "connected",
+      "lastSynced": "2024-03-18T15:30:00Z",
+      "notes": "Streaming feed 5s cadence"
+    },
+    {
+      "id": "integration-weather",
+      "name": "NOAA Weather Alerts",
+      "status": "syncing",
+      "lastSynced": "2024-03-18T15:20:00Z",
+      "notes": "Pending API key rotation"
+    },
+    {
+      "id": "integration-hospital",
+      "name": "Hospital capacity API",
+      "status": "error",
+      "lastSynced": "2024-03-18T13:05:00Z",
+      "notes": "Authentication failed; reauthorize before next shift"
+    }
+  ]
+}

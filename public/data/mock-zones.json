@@ -1,0 +1,131 @@
+[
+  {
+    "id": "zone-midtown",
+    "name": "Midtown Core",
+    "status": "Watch",
+    "commander": "Lt. Priya Singh",
+    "coverageArea": "Midtown to Financial District",
+    "onCallUnits": 6,
+    "activeIncidents": 4,
+    "lastDrill": "2024-03-12T14:00:00Z",
+    "readinessScore": 82,
+    "responseTimeTrend": "avg 6.1m (▼0.4)",
+    "incidentTrend": "+2 vs same time yesterday",
+    "notes": "Deploying spare medic unit to Lexington corridor for surge coverage.",
+    "hotspots": [
+      {
+        "id": "Z-MID-001",
+        "reportedAt": "2024-01-01T03:10:00Z",
+        "latitude": 40.7531,
+        "longitude": -73.9836,
+        "type": "EMS",
+        "priority": 1,
+        "status": "Dispatched"
+      },
+      {
+        "id": "Z-MID-002",
+        "reportedAt": "2024-01-01T03:22:00Z",
+        "latitude": 40.7474,
+        "longitude": -73.9857,
+        "type": "Fire",
+        "priority": 2,
+        "status": "Investigating"
+      },
+      {
+        "id": "Z-MID-003",
+        "reportedAt": "2024-01-01T02:52:00Z",
+        "latitude": 40.7419,
+        "longitude": -73.9897,
+        "type": "Traffic",
+        "priority": 3,
+        "status": "Logged"
+      }
+    ]
+  },
+  {
+    "id": "zone-waterfront",
+    "name": "Waterfront & Terminal",
+    "status": "Stable",
+    "commander": "Capt. Miguel Alvarez",
+    "coverageArea": "Hudson waterfront to Staten ferry slips",
+    "onCallUnits": 4,
+    "activeIncidents": 2,
+    "lastDrill": "2024-02-28T16:30:00Z",
+    "readinessScore": 91,
+    "responseTimeTrend": "avg 5.4m (—)",
+    "incidentTrend": "flat vs same hour",
+    "notes": "Harbor fireboat on standby due to cruise departure schedule.",
+    "hotspots": [
+      {
+        "id": "Z-WTR-001",
+        "reportedAt": "2024-01-01T02:48:00Z",
+        "latitude": 40.7068,
+        "longitude": -74.0118,
+        "type": "Fire",
+        "priority": 2,
+        "status": "Cleared"
+      },
+      {
+        "id": "Z-WTR-002",
+        "reportedAt": "2024-01-01T03:00:00Z",
+        "latitude": 40.7033,
+        "longitude": -74.0139,
+        "type": "Hazmat",
+        "priority": 3,
+        "status": "Logged"
+      },
+      {
+        "id": "Z-WTR-003",
+        "reportedAt": "2024-01-01T02:39:00Z",
+        "latitude": 40.7095,
+        "longitude": -74.0132,
+        "type": "EMS",
+        "priority": 2,
+        "status": "Dispatched"
+      }
+    ]
+  },
+  {
+    "id": "zone-uptown",
+    "name": "Uptown Residential",
+    "status": "Critical",
+    "commander": "Lt. Sarah Chen",
+    "coverageArea": "East Harlem through Morningside Heights",
+    "onCallUnits": 5,
+    "activeIncidents": 6,
+    "lastDrill": "2024-01-18T11:00:00Z",
+    "readinessScore": 68,
+    "responseTimeTrend": "avg 7.9m (▲1.1)",
+    "incidentTrend": "+4 vs same time yesterday",
+    "notes": "Heat advisory in effect; cooling centers opened across zone.",
+    "hotspots": [
+      {
+        "id": "Z-UPT-001",
+        "reportedAt": "2024-01-01T03:05:00Z",
+        "latitude": 40.8116,
+        "longitude": -73.9465,
+        "type": "Fire",
+        "priority": 1,
+        "status": "Dispatched"
+      },
+      {
+        "id": "Z-UPT-002",
+        "reportedAt": "2024-01-01T03:18:00Z",
+        "latitude": 40.8041,
+        "longitude": -73.9552,
+        "type": "EMS",
+        "priority": 1,
+        "status": "Investigating"
+      },
+      {
+        "id": "Z-UPT-003",
+        "reportedAt": "2024-01-01T03:12:00Z",
+        "latitude": 40.7982,
+        "longitude": -73.9649,
+        "type": "Other",
+        "priority": 3,
+        "status": "Logged"
+      }
+    ]
+  }
+]

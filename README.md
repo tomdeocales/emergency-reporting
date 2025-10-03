@@ -24,8 +24,10 @@ Visit http://localhost:3000 to explore the console. Protected routes live under 
 ## Feature Surfaces
 - **Incident intake**: Upload CSVs, validate schema, and review quality summaries under `/incidents`.
 - **Operations dashboard**: Real-time map, timeline playback, and incident log drawer at `/dashboard`.
+- **Zones**: Command readiness, hotspot map, and commander notes under `/zones`.
 - **Analytics**: Timeframe selector, volume/response tables, and export previews at `/analytics`.
 - **Alerts**: Rule builder with mock notification preview at `/alerts`.
+- **Data workspace**: Dataset catalog, exports, and integration health at `/data`.
 
 Folder conventions are documented in `docs/FILE-STRUCTURE.md`; UI best practices live in `docs/FRONTEND-BEST-PRACTICES.md`.
 

@@ -45,6 +45,7 @@ Key deliverables:
 - [x] Deliver `/dashboard` view with key metrics, heatmap, and timeline slider (mock data). *(Heatmap, filters, and timeline playback now ship together.)* 
 - [x] Add searchable incident table with filters synced to URL + Redux UI slice.
 - [x] Implement zone detail drawer with charts using recharts or equivalent primitives. *(Drawer surfaces status & priority breakdown plus latest activity; swap to chart lib later.)*
+- [x] Launch `/zones` readiness workspace with commander notes and hotspot tracking.
 
 ### M4. Analytics & Alerts *(Status: Done)*
 Focus: expose trend analysis and alert configuration for leadership.
@@ -59,6 +60,11 @@ Key deliverables:
 - [x] Accessibility pass (keyboard, focus states, contrast) and performance smoke tests. *(Skip link + focus outlines wired; reduced motion fallback added.)*
 - [x] Manual QA checklist covering all routes and critical flows. *(See `docs/QA-CHECKLIST.md` for latest runbook.)*
 - [x] Update README with setup, scripts, and demo instructions; attach screenshots or Loom. *(README now captures setup, feature map, and QA references.)*
+
+### M6. Data Workspace *(Status: Done)*
+Focus: centralize dataset catalog and integration health for administrators.
+Key deliverables:
+- [x] `/data` workspace listing datasets, export tooling, and integration status.
 
 ## Enablers & Dependencies
 - Mock geospatial layers (GeoJSON or grid tiles) required before heatmap work begins.
