@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { ChatWidget } from "./_components/chat-widget";
 import { type NavItem, SidebarNav } from "./_components/sidebar-nav";
+import { SidebarUserPanel } from "./_components/sidebar-user-panel";
 import { TopBar } from "./_components/top-bar";
 
 async function getCurrentUser() {
@@ -78,19 +79,22 @@ export default async function ProtectedLayout({
       <a className="skip-nav" href="#main-content">
         Skip to main content
       </a>
-      <aside className="hidden w-72 flex-col gap-6 border-r border-border/80 bg-sidebar px-6 py-8 shadow-sm md:flex">
-        <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-          Navigation
-        </span>
-        <div className="flex-1 overflow-y-auto pr-2">
+      <aside className="hidden w-72 flex-col gap-6 border-r border-border/60 bg-sidebar/95 px-6 py-8 shadow-lg ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:flex">
+        <div className="flex flex-col gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+          <span>Navigation</span>
+        </div>
+        <div className="flex-1 overflow-y-auto pr-1">
           <SidebarNav items={navItems} />
         </div>
+        <SidebarUserPanel
+          user={{ name: user.name, role: user.role }}
+          notifications={notifications}
+        />
       </aside>
       <div className="flex flex-1 flex-col gap-6 px-4 pb-10 pt-6 md:px-12">
         <TopBar
           datasetLabel="MetroFire Mock · Q1"
           datasetOptions={datasetOptions}
-          notifications={notifications}
           status={{ label: "Idle", tone: "idle" }}
           user={{ name: user.name, role: user.role }}
         />

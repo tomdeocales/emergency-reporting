@@ -1,14 +1,12 @@
 "use client";
 
-import { Bell, ChevronDown, Radio } from "lucide-react";
+import { ChevronDown, Radio } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -25,30 +23,11 @@ type DatasetOption = {
   description?: string;
 };
 
-type NotificationItem = {
-  id: string;
-  title: string;
-  description?: string;
-  timestamp?: string;
-  isNew?: boolean;
-};
-
-const toneClasses: Record<StatusTone, string> = {
-  idle: "bg-muted text-muted-foreground",
-  validating:
-    "bg-amber-100 text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
-  running: "bg-primary/10 text-primary",
-  completed:
-    "bg-emerald-100 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200",
-};
-
 export function TopBar({
   datasetLabel,
   datasetOptions,
   status,
   user,
-  notifications,
-  onSignOut,
 }: {
   datasetLabel: string;
   datasetOptions?: DatasetOption[];
@@ -60,10 +39,8 @@ export function TopBar({
     name: string;
     role: string;
   };
-  notifications?: NotificationItem[];
-  onSignOut?: () => void;
 }) {
-  const availableDatasets = useMemo(() => {
+  const options = useMemo(() => {
     if (datasetOptions?.length) {
       return datasetOptions;
     }
@@ -75,40 +52,18 @@ export function TopBar({
     ];
   }, [datasetOptions, datasetLabel]);
 
-  const [activeDatasetId, setActiveDatasetId] = useState(
-    () => availableDatasets[0]?.id ?? "",
-  );
+  const [activeId, setActiveId] = useState<string>(options[0]?.id ?? "");
 
   useEffect(() => {
-    const match = availableDatasets.find(
+    const match = options.find(
       (option) => option.label === datasetLabel || option.id === datasetLabel,
     );
     if (match) {
-      setActiveDatasetId(match.id);
+      setActiveId(match.id);
     }
-  }, [availableDatasets, datasetLabel]);
+  }, [options, datasetLabel]);
 
-  const activeDataset = availableDatasets.find(
-    (option) => option.id === activeDatasetId,
-  );
-
-  const [unread, setUnread] = useState<number>(
-    () => notifications?.filter((item) => item.isNew).length ?? 0,
-  );
-
-  useEffect(() => {
-    setUnread(notifications?.filter((item) => item.isNew).length ?? 0);
-  }, [notifications]);
-
-  const handleSignOut = () => {
-    if (onSignOut) {
-      onSignOut();
-      return;
-    }
-    window.location.href = "/";
-  };
-
-  const notificationItems = notifications ?? [];
+  const active = options.find((option) => option.id === activeId) ?? options[0];
 
   return (
     <header className="flex h-16 items-center justify-between rounded-3xl border border-border/70 bg-background/95 px-6 shadow-sm ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:px-8">
@@ -119,15 +74,19 @@ export function TopBar({
         </div>
         <div className="hidden h-4 w-px bg-border md:block" aria-hidden />
         <DatasetDropdown
-          datasets={availableDatasets}
-          activeId={activeDatasetId}
-          onSelect={setActiveDatasetId}
-          label={activeDataset?.label ?? datasetLabel}
+          datasets={options}
+          activeId={active.id}
+          onSelect={setActiveId}
         />
         <span
           className={cn(
             "inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium",
-            toneClasses[status.tone],
+            status.tone === "idle" && "bg-muted text-muted-foreground",
+            status.tone === "validating" &&
+              "bg-amber-100 text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
+            status.tone === "running" && "bg-primary/10 text-primary",
+            status.tone === "completed" &&
+              "bg-emerald-100 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200",
           )}
           aria-live="polite"
           aria-atomic="true"
@@ -136,13 +95,11 @@ export function TopBar({
           {status.label}
         </span>
       </div>
-      <div className="flex items-center gap-4 text-sm">
-        <NotificationsDropdown
-          notifications={notificationItems}
-          unread={unread}
-          onMarkAll={() => setUnread(0)}
-        />
-        <UserDropdown user={user} onSignOut={handleSignOut} />
+      <div className="hidden flex-col items-end text-xs md:flex">
+        <span className="text-sm font-semibold text-foreground">
+          {user.name}
+        </span>
+        <span className="text-muted-foreground">{user.role}</span>
       </div>
     </header>
   );
@@ -152,13 +109,18 @@ function DatasetDropdown({
   datasets,
   activeId,
   onSelect,
-  label,
 }: {
   datasets: DatasetOption[];
   activeId: string;
   onSelect: (id: string) => void;
-  label: string;
 }) {
+  const active =
+    datasets.find((dataset) => dataset.id === activeId) ?? datasets[0];
+
+  if (!active) {
+    return null;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -167,7 +129,7 @@ function DatasetDropdown({
           className="hidden items-center gap-2 rounded-full px-4 py-2 text-sm md:flex"
           aria-label="Switch dataset"
         >
-          {label}
+          {active.label}
           <ChevronDown className="h-4 w-4" aria-hidden />
         </Button>
       </DropdownMenuTrigger>
@@ -175,7 +137,7 @@ function DatasetDropdown({
         <DropdownMenuLabel>Datasets</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
-          value={activeId}
+          value={active.id}
           onValueChange={onSelect}
           aria-label="Select dataset"
         >
@@ -194,117 +156,6 @@ function DatasetDropdown({
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
-function NotificationsDropdown({
-  notifications,
-  unread,
-  onMarkAll,
-}: {
-  notifications: NotificationItem[];
-  unread: number;
-  onMarkAll: () => void;
-}) {
-  const hasNotifications = notifications.length > 0;
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="relative rounded-full border border-border/60 bg-background/90 shadow-sm transition hover:border-primary/40 hover:text-primary"
-          aria-label="View notifications"
-        >
-          <Bell className="h-5 w-5" aria-hidden />
-          {unread > 0 ? (
-            <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-destructive px-1 text-[0.625rem] font-semibold text-destructive-foreground">
-              {unread}
-            </span>
-          ) : null}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-72">
-        <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {hasNotifications ? (
-          <DropdownMenuGroup>
-            {notifications.map((notification) => (
-              <DropdownMenuItem
-                key={notification.id}
-                className="flex flex-col gap-1 text-left text-sm"
-              >
-                <span className="font-medium text-foreground">
-                  {notification.title}
-                </span>
-                {notification.description ? (
-                  <span className="text-xs text-muted-foreground">
-                    {notification.description}
-                  </span>
-                ) : null}
-                {notification.timestamp ? (
-                  <span className="text-[0.65rem] uppercase tracking-wide text-muted-foreground">
-                    {notification.timestamp}
-                  </span>
-                ) : null}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuGroup>
-        ) : (
-          <DropdownMenuItem disabled>
-            All quiet — no notifications at this time.
-          </DropdownMenuItem>
-        )}
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={onMarkAll}>
-          Mark all as read
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
-function UserDropdown({
-  user,
-  onSignOut,
-}: {
-  user: {
-    name: string;
-    role: string;
-  };
-  onSignOut: () => void;
-}) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="flex items-center gap-2 rounded-full border border-border/60 bg-background/90 px-3 py-2 text-sm shadow-sm transition hover:border-primary/40 hover:text-primary"
-          aria-label="Open user menu"
-        >
-          <div className="flex flex-col text-right">
-            <span className="font-medium leading-none">{user.name}</span>
-            <span className="text-xs text-muted-foreground">{user.role}</span>
-          </div>
-          <ChevronDown className="h-3 w-3" aria-hidden />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel className="text-xs uppercase text-muted-foreground">
-          Account
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem disabled className="flex flex-col items-start gap-1">
-          <span className="text-sm font-medium text-foreground">
-            {user.name}
-          </span>
-          <span className="text-xs text-muted-foreground">{user.role}</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={onSignOut}>Sign out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
