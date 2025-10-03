@@ -39,6 +39,28 @@ const datasetOptions = [
   },
 ];
 
+const notifications = [
+  {
+    id: "notif-1",
+    title: "Priority-one surge",
+    description: "Three incidents logged within Midtown coverage zone.",
+    timestamp: "2 min ago",
+    isNew: true,
+  },
+  {
+    id: "notif-2",
+    title: "Weather advisory",
+    description: "Heat index expected to surpass 100°F at 15:00.",
+    timestamp: "20 min ago",
+  },
+  {
+    id: "notif-3",
+    title: "Data sync",
+    description: "Hospital capacity feed recovered after credential refresh.",
+    timestamp: "1 hr ago",
+  },
+];
+
 export default async function ProtectedLayout({
   children,
 }: {
@@ -65,6 +87,7 @@ export default async function ProtectedLayout({
         <TopBar
           datasetLabel="MetroFire Mock · Q1"
           datasetOptions={datasetOptions}
+          notifications={notifications}
           status={{ label: "Idle", tone: "idle" }}
           user={{ name: user.name, role: user.role }}
         />

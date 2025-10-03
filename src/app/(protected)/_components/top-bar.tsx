@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -23,6 +25,14 @@ type DatasetOption = {
   description?: string;
 };
 
+type NotificationItem = {
+  id: string;
+  title: string;
+  description?: string;
+  timestamp?: string;
+  isNew?: boolean;
+};
+
 const toneClasses: Record<StatusTone, string> = {
   idle: "bg-muted text-muted-foreground",
   validating:
@@ -37,6 +47,8 @@ export function TopBar({
   datasetOptions,
   status,
   user,
+  notifications,
+  onSignOut,
 }: {
   datasetLabel: string;
   datasetOptions?: DatasetOption[];
@@ -48,6 +60,8 @@ export function TopBar({
     name: string;
     role: string;
   };
+  notifications?: NotificationItem[];
+  onSignOut?: () => void;
 }) {
   const availableDatasets = useMemo(() => {
     if (datasetOptions?.length) {
@@ -78,6 +92,24 @@ export function TopBar({
     (option) => option.id === activeDatasetId,
   );
 
+  const [unread, setUnread] = useState<number>(
+    () => notifications?.filter((item) => item.isNew).length ?? 0,
+  );
+
+  useEffect(() => {
+    setUnread(notifications?.filter((item) => item.isNew).length ?? 0);
+  }, [notifications]);
+
+  const handleSignOut = () => {
+    if (onSignOut) {
+      onSignOut();
+      return;
+    }
+    window.location.href = "/";
+  };
+
+  const notificationItems = notifications ?? [];
+
   return (
     <header className="flex h-16 items-center justify-between border-b border-border bg-background px-6">
       <div className="flex items-center gap-4">
@@ -105,18 +137,12 @@ export function TopBar({
         </span>
       </div>
       <div className="flex items-center gap-3 text-sm">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          aria-label="View notifications"
-        >
-          <Bell className="h-5 w-5" aria-hidden />
-        </Button>
-        <div className="flex flex-col text-right">
-          <span className="font-medium leading-none">{user.name}</span>
-          <span className="text-xs text-muted-foreground">{user.role}</span>
-        </div>
+        <NotificationsDropdown
+          notifications={notificationItems}
+          unread={unread}
+          onMarkAll={() => setUnread(0)}
+        />
+        <UserDropdown user={user} onSignOut={handleSignOut} />
       </div>
     </header>
   );
@@ -168,6 +194,111 @@ function DatasetDropdown({
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function NotificationsDropdown({
+  notifications,
+  unread,
+  onMarkAll,
+}: {
+  notifications: NotificationItem[];
+  unread: number;
+  onMarkAll: () => void;
+}) {
+  const hasNotifications = notifications.length > 0;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="relative rounded-full"
+          aria-label="View notifications"
+        >
+          <Bell className="h-5 w-5" aria-hidden />
+          {unread > 0 ? (
+            <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-destructive px-1 text-[0.625rem] font-semibold text-destructive-foreground">
+              {unread}
+            </span>
+          ) : null}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-72">
+        <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {hasNotifications ? (
+          <DropdownMenuGroup>
+            {notifications.map((notification) => (
+              <DropdownMenuItem
+                key={notification.id}
+                className="flex flex-col gap-1 text-left text-sm"
+              >
+                <span className="font-medium text-foreground">
+                  {notification.title}
+                </span>
+                {notification.description ? (
+                  <span className="text-xs text-muted-foreground">
+                    {notification.description}
+                  </span>
+                ) : null}
+                {notification.timestamp ? (
+                  <span className="text-[0.65rem] uppercase tracking-wide text-muted-foreground">
+                    {notification.timestamp}
+                  </span>
+                ) : null}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuGroup>
+        ) : (
+          <DropdownMenuItem disabled>
+            All quiet — no notifications at this time.
+          </DropdownMenuItem>
+        )}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={onMarkAll}>
+          Mark all as read
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function UserDropdown({
+  user,
+  onSignOut,
+}: {
+  user: {
+    name: string;
+    role: string;
+  };
+  onSignOut: () => void;
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          className="flex items-center gap-2 px-2 py-1 text-sm"
+          aria-label="Open user menu"
+        >
+          <div className="flex flex-col text-right">
+            <span className="font-medium leading-none">{user.name}</span>
+            <span className="text-xs text-muted-foreground">{user.role}</span>
+          </div>
+          <ChevronDown className="h-3 w-3" aria-hidden />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48">
+        <DropdownMenuLabel className="text-xs uppercase text-muted-foreground">
+          Account
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem disabled>{user.name}</DropdownMenuItem>
+        <DropdownMenuItem onSelect={onSignOut}>Sign out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
