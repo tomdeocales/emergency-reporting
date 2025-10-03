@@ -21,6 +21,24 @@ const navItems: NavItem[] = [
   { href: "/data", label: "Data", icon: "data" },
 ];
 
+const datasetOptions = [
+  {
+    id: "metrofire-q1",
+    label: "MetroFire Mock · Q1",
+    description: "Current demo dataset",
+  },
+  {
+    id: "metrofire-q2",
+    label: "MetroFire Mock · Q2",
+    description: "Upcoming scenario refresh",
+  },
+  {
+    id: "northbay",
+    label: "North Bay Mutual Aid",
+    description: "Regional drill incident feed",
+  },
+];
+
 export default async function ProtectedLayout({
   children,
 }: {
@@ -46,6 +64,7 @@ export default async function ProtectedLayout({
       <div className="flex flex-1 flex-col">
         <TopBar
           datasetLabel="MetroFire Mock · Q1"
+          datasetOptions={datasetOptions}
           status={{ label: "Idle", tone: "idle" }}
           user={{ name: user.name, role: user.role }}
         />
