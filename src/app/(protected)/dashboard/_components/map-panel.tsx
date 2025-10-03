@@ -1,6 +1,10 @@
 "use client";
 
-import type { GeoJSONSource, Map as MapInstance } from "maplibre-gl";
+import type {
+  GeoJSONSource,
+  Map as MapInstance,
+  PaddingOptions,
+} from "maplibre-gl";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef } from "react";
@@ -12,6 +16,14 @@ const MAP_STYLE = "https://demotiles.maplibre.org/style.json";
 const SOURCE_ID = "dashboard-incidents";
 const HEAT_LAYER_ID = "dashboard-incidents-heat";
 const CIRCLE_LAYER_ID = "dashboard-incidents-points";
+
+type FrozenView = {
+  center: [number, number];
+  zoom: number;
+  bearing: number;
+  pitch: number;
+  padding: PaddingOptions;
+};
 
 export function MapPanel({
   incidents,
@@ -25,6 +37,7 @@ export function MapPanel({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapInstance | null>(null);
   const hasFitRef = useRef(false);
+  const frozenViewRef = useRef<FrozenView | null>(null);
 
   const geojson = buildGeoJson(incidents);
 
@@ -49,7 +62,9 @@ export function MapPanel({
     map.once("load", () => {
       const initialData = buildGeoJson(incidents);
       addSourcesAndLayers(map, initialData);
-      fitToData(map, incidents);
+      if (shouldFitToData) {
+        fitToData(map, incidents);
+      }
       hasFitRef.current = true;
     });
 
@@ -58,18 +73,55 @@ export function MapPanel({
     return () => {
       map.remove();
       mapRef.current = null;
+      hasFitRef.current = false;
+      frozenViewRef.current = null;
     };
-  }, [incidents]);
+  }, [incidents, shouldFitToData]);
 
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
+
+    if (!shouldFitToData) {
+      frozenViewRef.current = {
+        center: map.getCenter().toArray() as [number, number],
+        zoom: map.getZoom(),
+        bearing: map.getBearing(),
+        pitch: map.getPitch(),
+        padding: map.getPadding(),
+      };
+      map.stop();
+    } else {
+      frozenViewRef.current = null;
+    }
+  }, [shouldFitToData]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const applyFrozenView = () => {
+      const frozen = frozenViewRef.current;
+      if (!frozen) {
+        return;
+      }
+
+      map.setPadding(frozen.padding);
+      map.jumpTo({
+        center: frozen.center,
+        zoom: frozen.zoom,
+        bearing: frozen.bearing,
+        pitch: frozen.pitch,
+      });
+    };
 
     if (map.isStyleLoaded()) {
       updateSource(map, geojson);
       if (shouldFitToData || !hasFitRef.current) {
         fitToData(map, incidents);
         hasFitRef.current = true;
+      } else {
+        applyFrozenView();
       }
     } else {
       const onLoad = () => {
@@ -77,6 +129,8 @@ export function MapPanel({
         if (shouldFitToData || !hasFitRef.current) {
           fitToData(map, incidents);
           hasFitRef.current = true;
+        } else {
+          applyFrozenView();
         }
         map.off("load", onLoad);
       };
@@ -207,7 +261,7 @@ function fitToData(map: MapInstance, incidents: IncidentRecord[]) {
   map.fitBounds(bounds, {
     padding: 48,
     maxZoom: 14,
-    duration: 800,
+    duration: 500,
   });
 }
 
