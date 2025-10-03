@@ -47,8 +47,8 @@ export function ChatWidget() {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {isOpen ? (
-        <div className="w-[360px] rounded-3xl border border-border/70 bg-background/95 shadow-xl ring-1 ring-border/40 backdrop-blur supports-[backdrop-filter]:backdrop-blur">
-          <header className="flex items-start justify-between gap-3 rounded-t-3xl border-b border-border/60 bg-gradient-to-r from-primary/10 via-background/90 to-secondary/20 px-4 py-3">
+        <div className="w-[360px] rounded-[28px] border border-border/60 bg-background/95 shadow-xl ring-1 ring-border/40 backdrop-blur supports-[backdrop-filter]:backdrop-blur">
+          <header className="flex items-start justify-between gap-3 rounded-t-[28px] border-b border-border/60 bg-gradient-to-r from-primary/15 via-background/95 to-secondary/20 px-5 py-4">
             <div>
               <p className="text-sm font-semibold text-foreground">
                 AI Assistant
@@ -134,7 +134,7 @@ export function ChatWidget() {
               onSubmit={handleSubmit}
               className="border-t border-border/60 bg-background/90 px-4 py-3"
             >
-              <div className="flex items-end gap-2">
+              <div className="flex items-end gap-3">
                 <textarea
                   value={currentInput}
                   onChange={handleInputChange}
@@ -145,7 +145,7 @@ export function ChatWidget() {
                 <Button
                   type="submit"
                   disabled={isLoading || trimmedInput.length === 0}
-                  className="rounded-2xl px-4"
+                  className="rounded-2xl px-5"
                 >
                   {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -174,12 +174,13 @@ export function ChatWidget() {
       {!isOpen ? (
         <Button
           type="button"
-          size="lg"
-          className="flex items-center gap-2 rounded-full border border-border/70 bg-background/95 px-4 py-2 text-sm shadow-lg ring-1 ring-border/40 backdrop-blur transition hover:border-primary/40 hover:text-primary"
+          size="icon"
+          title="Chat with AI"
+          aria-label="Chat with AI"
+          className="h-14 w-14 rounded-full border border-primary/30 bg-gradient-to-br from-primary via-primary/80 to-primary/60 text-primary-foreground shadow-2xl ring-1 ring-primary/50 transition hover:scale-105"
           onClick={() => setIsOpen(true)}
         >
-          <MessageCircle className="h-4 w-4" aria-hidden />
-          Ask AI
+          <MessageCircle className="h-5 w-5" aria-hidden />
         </Button>
       ) : null}
     </div>
