@@ -7,7 +7,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-xl border border-border bg-card text-card-foreground shadow-sm",
+        "rounded-3xl border border-border/60 bg-card/95 text-card-foreground shadow-sm ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur",
         className,
       )}
       {...props}
@@ -21,7 +21,10 @@ export function CardHeader({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("flex flex-col space-y-1.5 p-6", className)}
+      className={cn(
+        "flex flex-col gap-2 border-b border-border/50 px-6 pb-4 pt-6",
+        className,
+      )}
       {...props}
     />
   );
@@ -55,7 +58,7 @@ export function CardContent({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("p-6 pt-0", className)} {...props} />;
+  return <div className={cn("p-6", className)} {...props} />;
 }
 
 export function CardFooter({
@@ -63,6 +66,12 @@ export function CardFooter({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("flex items-center p-6 pt-0", className)} {...props} />
+    <div
+      className={cn(
+        "flex items-center border-t border-border/50 px-6 pb-6 pt-4",
+        className,
+      )}
+      {...props}
+    />
   );
 }
