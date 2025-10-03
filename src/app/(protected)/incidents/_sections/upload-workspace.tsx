@@ -14,6 +14,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Table,
   TableBody,
   TableCell,
@@ -22,6 +29,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { IncidentQualitySummary, IncidentRecord } from "@/types/incidents";
+import { MapPanel } from "../../dashboard/_components/map-panel";
 
 const incidentRowSchema = z.object({
   reportedAt: z
@@ -77,6 +85,7 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
     "idle" | "success" | "error"
   >("idle");
   const [toast, setToast] = useState<ToastState | null>(null);
+  const [isMapOpen, setIsMapOpen] = useState(false);
 
   useEffect(() => {
     if (!toast) return;
@@ -569,7 +578,12 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
                 </p>
               )}
               <div className="flex justify-end">
-                <Button type="button" variant="outline" size="sm">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsMapOpen(true)}
+                >
                   Open full map
                 </Button>
               </div>
@@ -596,6 +610,21 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
           </CardContent>
         </Card>
       </aside>
+
+      <Dialog open={isMapOpen} onOpenChange={setIsMapOpen}>
+        <DialogContent className="w-full max-w-5xl">
+          <DialogHeader>
+            <DialogTitle>Incident map preview</DialogTitle>
+            <DialogDescription>
+              Explore the current batch of incidents on the full-screen map
+              before promoting the dataset into operations.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="h-[520px] w-full overflow-hidden rounded-xl">
+            <MapPanel incidents={incidents} className="h-full" />
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <ToastContainer toast={toast} onDismiss={() => setToast(null)} />
     </div>
