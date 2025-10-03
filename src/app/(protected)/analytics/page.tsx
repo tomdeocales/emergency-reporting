@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 export default async function AnalyticsPage({
   searchParams,
 }: {
-  searchParams?: { range?: string };
+  searchParams?: Promise<{ range?: string }>;
 }) {
-  const candidate = searchParams?.range as AnalyticsRange | undefined;
+  const resolvedParams = (await searchParams) ?? {};
+  const candidate = resolvedParams.range as AnalyticsRange | undefined;
   const range: AnalyticsRange =
     candidate && isValidRange(candidate) ? candidate : "24h";
   const snapshot = await getAnalyticsSnapshot(range);
