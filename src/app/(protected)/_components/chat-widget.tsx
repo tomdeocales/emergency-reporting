@@ -19,13 +19,16 @@ export function ChatWidget() {
 
   const {
     messages,
-    input,
+    input: rawInput,
     handleInputChange,
     handleSubmit,
     isLoading,
     setInput,
     error,
   } = useChat({ api: "/api/chat" });
+
+  const currentInput = rawInput ?? "";
+  const trimmedInput = currentInput.trim();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: scroll to bottom when the message list updates.
   useEffect(() => {
@@ -133,7 +136,7 @@ export function ChatWidget() {
             >
               <div className="flex items-end gap-2">
                 <textarea
-                  value={input}
+                  value={currentInput}
                   onChange={handleInputChange}
                   placeholder="Ask about incidents, analytics, or alerts..."
                   className="h-[60px] flex-1 resize-none rounded-2xl border border-border/60 bg-background px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
@@ -141,7 +144,7 @@ export function ChatWidget() {
                 />
                 <Button
                   type="submit"
-                  disabled={isLoading || input.trim().length === 0}
+                  disabled={isLoading || trimmedInput.length === 0}
                   className="rounded-2xl px-4"
                 >
                   {isLoading ? (
