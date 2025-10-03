@@ -53,11 +53,11 @@ Key deliverables:
 - [x] `/alerts` route with alert rule builder, notification previews, and mock Notification API hook. *(Interactive rule builder persists locally and fires mock notifications.)*
 - [x] Shared export utilities for CSV/JSON/PNG outputs. *(Reusable helpers power dashboard and analytics exports.)*
 
-### M5. QA, Polish & Handoff *(Status: Todo)*
+### M5. QA, Polish & Handoff *(Status: In Progress)*
 Focus: finalize usability, documentation, and deployment readiness.
 Key deliverables:
-- [ ] Accessibility pass (keyboard, focus states, contrast) and performance smoke tests.
-- [ ] Manual QA checklist covering all routes and critical flows.
+- [x] Accessibility pass (keyboard, focus states, contrast) and performance smoke tests. *(Skip link + focus outlines wired; reduced motion fallback added.)*
+- [x] Manual QA checklist covering all routes and critical flows. *(See `docs/QA-CHECKLIST.md` for latest runbook.)*
 - [ ] Update README with setup, scripts, and demo instructions; attach screenshots or Loom.
 
 ## Enablers & Dependencies

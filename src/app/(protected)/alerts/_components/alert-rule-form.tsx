@@ -154,9 +154,12 @@ export function AlertRuleForm({
       </div>
 
       {feedback ? (
-        <p className={buildFeedbackClasses(feedback.status)}>
+        <output
+          className={buildFeedbackClasses(feedback.status)}
+          aria-live={feedback.status === "error" ? "assertive" : "polite"}
+        >
           {feedback.message}
-        </p>
+        </output>
       ) : null}
     </form>
   );

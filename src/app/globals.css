@@ -119,4 +119,42 @@
   body {
     @apply bg-background text-foreground;
   }
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-ring;
+  }
+}
+
+.skip-nav {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 50;
+  padding: 0.75rem 1rem;
+  background-color: var(--background);
+  color: var(--foreground);
+  border-radius: 0 0 0.75rem 0.75rem;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18);
+  transition:
+    left 0.2s ease,
+    transform 0.2s ease;
+}
+
+.skip-nav:focus-visible {
+  left: 1rem;
+  transform: translateY(0.5rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.001ms;
+    scroll-behavior: auto;
+  }
 }

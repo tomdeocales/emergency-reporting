@@ -75,6 +75,7 @@ export function ExportPanel({ rows }: { rows: AnalyticsExportRow[] }) {
                 width={80}
                 height={80}
                 className="h-20 w-20 rounded border border-border"
+                loading="lazy"
               />
               <p className="text-xs text-muted-foreground">{preview.note}</p>
             </div>

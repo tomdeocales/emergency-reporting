@@ -34,6 +34,9 @@ export default async function ProtectedLayout({
 
   return (
     <div className="flex min-h-screen bg-muted/30">
+      <a className="skip-nav" href="#main-content">
+        Skip to main content
+      </a>
       <aside className="hidden w-64 flex-col border-r border-border bg-background/90 px-4 py-6 md:flex">
         <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
           Navigation
@@ -50,7 +53,9 @@ export default async function ProtectedLayout({
           <div className="md:hidden">
             <SidebarNav items={navItems} />
           </div>
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1" tabIndex={-1}>
+            {children}
+          </main>
         </div>
       </div>
     </div>
