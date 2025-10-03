@@ -69,20 +69,20 @@ export function SidebarUserPanel({
   const hasNotifications = sortedNotifications.length > 0;
 
   return (
-    <div className="flex items-center justify-between gap-3 rounded-2xl border border-border/70 bg-background/90 px-4 py-3 shadow-sm ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur">
+    <div className="flex items-center justify-between gap-4 rounded-xl border border-border/60 bg-background px-4 py-4 shadow-sm">
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-foreground">
+        <p className="truncate text-sm font-medium text-foreground">
           {user.name}
         </p>
         <p className="truncate text-xs text-muted-foreground">{user.role}</p>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Button
           type="button"
           variant="ghost"
           size="icon"
           className={cn(
-            "relative rounded-full border border-border/70 bg-background/90 text-muted-foreground transition hover:border-primary/40 hover:text-primary",
+            "relative rounded-md border border-border/60 bg-background text-muted-foreground transition hover:border-primary/40 hover:text-primary",
             unread > 0 && "text-primary",
           )}
           aria-label="Open notifications"
@@ -99,7 +99,7 @@ export function SidebarUserPanel({
           type="button"
           variant="ghost"
           size="icon"
-          className="rounded-full border border-border/70 bg-background/90 text-muted-foreground transition hover:border-destructive/50 hover:text-destructive"
+          className="rounded-md border border-border/60 bg-background text-muted-foreground transition hover:border-destructive/40 hover:text-destructive"
           aria-label="Sign out"
           onClick={handleSignOut}
         >
@@ -120,7 +120,7 @@ export function SidebarUserPanel({
               sortedNotifications.map((notification) => (
                 <article
                   key={notification.id}
-                  className="rounded-xl border border-border/60 bg-muted/20 px-4 py-3"
+                  className="rounded-lg border border-border/60 bg-muted/20 px-4 py-3"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-sm font-semibold text-foreground">
@@ -145,7 +145,7 @@ export function SidebarUserPanel({
                 </article>
               ))
             ) : (
-              <div className="rounded-xl border border-dashed border-border/70 bg-muted/20 px-4 py-6 text-center text-sm text-muted-foreground">
+              <div className="rounded-lg border border-dashed border-border/70 bg-muted/20 px-4 py-6 text-center text-sm text-muted-foreground">
                 All quiet — no notifications right now.
               </div>
             )}

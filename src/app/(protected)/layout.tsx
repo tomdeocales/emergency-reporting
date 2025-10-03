@@ -1,6 +1,15 @@
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
+
 import { ChatWidget } from "./_components/chat-widget";
 import { type NavItem, SidebarNav } from "./_components/sidebar-nav";
 import { SidebarUserPanel } from "./_components/sidebar-user-panel";
@@ -75,44 +84,60 @@ export default async function ProtectedLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-muted/20">
+    <SidebarProvider className="bg-muted/15">
       <a className="skip-nav" href="#main-content">
         Skip to main content
       </a>
-      <aside className="fixed inset-y-0 left-0 hidden w-72 flex-col gap-6 border-r border-border/60 bg-sidebar/95 px-6 py-8 shadow-lg ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:flex">
-        <div className="flex flex-col gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          <span>Navigation</span>
-        </div>
-        <div className="flex-1 overflow-y-auto pr-1">
-          <SidebarNav items={navItems} />
-        </div>
-        <SidebarUserPanel
-          user={{ name: user.name, role: user.role }}
-          notifications={notifications}
-        />
-      </aside>
-      <div className="md:pl-[18rem] flex min-h-screen flex-1 flex-col gap-6 px-4 pb-10 pt-6 md:pl-[20rem] md:px-12">
-        <TopBar
-          datasetLabel="MetroFire Mock · Q1"
-          datasetOptions={datasetOptions}
-          status={{ label: "Idle", tone: "idle" }}
-        />
-        <div className="flex flex-1 flex-col gap-6">
-          <div className="md:hidden">
-            <SidebarNav items={navItems} />
-          </div>
-          <main
-            id="main-content"
-            className="flex-1 overflow-y-auto rounded-3xl border border-border/70 bg-background/95 p-6 shadow-md ring-1 ring-border/40 backdrop-blur md:p-10"
-            tabIndex={-1}
-          >
-            <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
-              {children}
+      <Sidebar variant="inset" collapsible="icon">
+        <SidebarHeader>
+          <div className="flex items-center gap-3 px-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-base font-semibold uppercase text-primary">
+              A
             </div>
-          </main>
+            <div className="flex flex-col leading-tight">
+              <span className="text-sm font-semibold text-foreground">
+                Acme Response
+              </span>
+              <span className="text-xs text-muted-foreground">
+                Operations Console
+              </span>
+            </div>
+          </div>
+        </SidebarHeader>
+        <SidebarContent className="pt-4">
+          <SidebarNav items={navItems} />
+        </SidebarContent>
+        <SidebarFooter className="pt-4">
+          <SidebarUserPanel
+            user={{ name: user.name, role: user.role }}
+            notifications={notifications}
+          />
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset className="bg-muted/15">
+        <div className="flex min-h-screen flex-1 flex-col gap-8 px-4 pb-12 pt-8 md:px-10">
+          <TopBar
+            datasetLabel="MetroFire Mock · Q1"
+            datasetOptions={datasetOptions}
+            status={{ label: "Idle", tone: "idle" }}
+          />
+          <div className="flex flex-1 flex-col gap-6">
+            <div className="md:hidden">
+              <SidebarNav items={navItems} />
+            </div>
+            <main
+              id="main-content"
+              className="flex-1 overflow-y-auto rounded-xl border border-border/70 bg-background p-6 shadow-md ring-1 ring-border/30 md:p-8"
+              tabIndex={-1}
+            >
+              <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+                {children}
+              </div>
+            </main>
+          </div>
+          <ChatWidget />
         </div>
-        <ChatWidget />
-      </div>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

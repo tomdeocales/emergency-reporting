@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
 type StatusTone = "idle" | "validating" | "running" | "completed";
@@ -61,11 +62,12 @@ export function TopBar({
   const active = options.find((option) => option.id === activeId) ?? options[0];
 
   return (
-    <header className="flex h-16 items-center justify-between rounded-3xl border border-border/70 bg-background/95 px-6 shadow-sm ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:px-8">
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 text-sm font-semibold">
+    <header className="flex h-16 items-center justify-between rounded-xl border border-border/60 bg-background px-4 shadow-sm md:px-8">
+      <div className="flex items-center gap-3 md:gap-4">
+        <SidebarTrigger className="md:hidden" />
+        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
           <Radio className="h-4 w-4 text-primary" aria-hidden />
-          Emergency Reporting
+          Live Dataset
         </div>
         <div className="hidden h-4 w-px bg-border md:block" aria-hidden />
         <DatasetDropdown
@@ -75,7 +77,7 @@ export function TopBar({
         />
         <span
           className={cn(
-            "inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium",
+            "inline-flex items-center gap-2 rounded-md px-3 py-1 text-xs font-medium",
             status.tone === "idle" && "bg-muted text-muted-foreground",
             status.tone === "validating" &&
               "bg-amber-100 text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
@@ -115,7 +117,7 @@ function DatasetDropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="hidden items-center gap-2 rounded-full px-4 py-2 text-sm md:flex"
+          className="hidden items-center gap-2 rounded-md px-3 py-2 text-sm md:flex"
           aria-label="Switch dataset"
         >
           {active.label}

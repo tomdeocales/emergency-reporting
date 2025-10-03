@@ -132,12 +132,12 @@ export function OperationsShell({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <SummaryCards summary={snapshot.summary} />
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div className="space-y-4">
-          <header className="flex flex-wrap items-center justify-between gap-3">
+        <div className="space-y-5">
+          <header className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h2 className="text-lg font-semibold">Live map</h2>
               <p className="text-sm text-muted-foreground">
@@ -150,7 +150,7 @@ export function OperationsShell({
                 </p>
               ) : null}
             </div>
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-4 text-sm">
               <span className="rounded-full bg-primary/10 px-3 py-1 font-medium text-primary">
                 {totalActive} showing
               </span>
@@ -172,10 +172,10 @@ export function OperationsShell({
             shouldFitToData={!isPlaying}
           />
         </div>
-        <div className="space-y-3">
+        <div className="space-y-4">
           <h2 className="text-lg font-semibold">Filters</h2>
-          <div className="space-y-3 rounded-xl border border-border/60 bg-muted/20 p-4 text-sm">
-            <label className="flex flex-col gap-1" htmlFor="operations-search">
+          <div className="space-y-4 rounded-xl border border-border/60 bg-muted/20 p-5 text-sm">
+            <label className="flex flex-col gap-2" htmlFor="operations-search">
               <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Search
               </span>
@@ -187,7 +187,7 @@ export function OperationsShell({
               />
             </label>
             <label
-              className="flex flex-col gap-1"
+              className="flex flex-col gap-2"
               htmlFor="operations-type-filter"
             >
               <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -211,8 +211,8 @@ export function OperationsShell({
         </div>
       </section>
 
-      <section className="space-y-4">
-        <header className="flex flex-wrap items-center justify-between gap-3">
+      <section className="space-y-5">
+        <header className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h2 className="text-lg font-semibold">Recent incidents</h2>
             <p className="text-sm text-muted-foreground">

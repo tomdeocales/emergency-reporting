@@ -46,10 +46,10 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
             key={item.href}
             href={item.href}
             className={cn(
-              "group flex items-center gap-3 rounded-2xl px-4 py-2 text-sm font-medium transition-colors",
+              "group flex items-center gap-4 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               isActive
-                ? "bg-primary/15 text-primary shadow-sm ring-1 ring-primary/40"
-                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground hover:ring-1 hover:ring-border/50",
+                ? "bg-primary/10 text-primary ring-1 ring-primary/25"
+                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground hover:ring-1 hover:ring-border/40",
             )}
             aria-current={isActive ? "page" : undefined}
           >

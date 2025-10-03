@@ -44,7 +44,7 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem;
   --background: oklch(0.97 0.004 230);
   --foreground: oklch(0.24 0.02 240);
   --card: oklch(0.985 0.004 230);
@@ -136,7 +136,7 @@
   padding: 0.75rem 1rem;
   background-color: var(--background);
   color: var(--foreground);
-  border-radius: 0 0 0.75rem 0.75rem;
+  border-radius: 0 0 0.5rem 0.5rem;
   box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18);
   transition:
     left 0.2s ease,
@@ -156,5 +156,14 @@
     animation-iteration-count: 1;
     transition-duration: 0.001ms;
     scroll-behavior: auto;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

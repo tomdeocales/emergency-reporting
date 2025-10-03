@@ -44,12 +44,12 @@ export function ChatWidget() {
   const hasMessages = useMemo(() => messages.length > 0, [messages.length]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
       {isOpen ? (
-        <div className="w-[360px] rounded-[28px] border border-border/60 bg-background/95 shadow-xl ring-1 ring-border/40 backdrop-blur supports-[backdrop-filter]:backdrop-blur">
-          <header className="flex items-start justify-between gap-3 rounded-t-[28px] border-b border-border/60 bg-gradient-to-r from-primary/15 via-background/95 to-secondary/20 px-5 py-4">
+        <div className="w-[360px] rounded-xl border border-border/60 bg-background/95 shadow-xl ring-1 ring-border/35 backdrop-blur supports-[backdrop-filter]:backdrop-blur">
+          <header className="flex items-start justify-between gap-4 rounded-t-xl border-b border-border/60 bg-gradient-to-r from-primary/10 via-background/95 to-secondary/10 px-5 py-4">
             <div>
-              <p className="text-sm font-semibold text-foreground">
+              <p className="text-sm font-medium text-foreground">
                 AI Assistant
               </p>
               <p className="text-xs text-muted-foreground">
@@ -61,14 +61,14 @@ export function ChatWidget() {
               type="button"
               variant="ghost"
               size="icon"
-              className="rounded-full text-muted-foreground hover:text-foreground"
+              className="rounded-md text-muted-foreground hover:text-foreground"
               onClick={() => setIsOpen(false)}
               aria-label="Close chat"
             >
               <X className="h-4 w-4" />
             </Button>
           </header>
-          <div className="flex max-h-[420px] flex-col gap-3 overflow-hidden">
+          <div className="flex max-h-[420px] flex-col gap-4 overflow-hidden">
             <div className="flex-1 overflow-y-auto px-4 py-3">
               {hasMessages ? (
                 <div className="space-y-4 text-sm">
@@ -84,7 +84,7 @@ export function ChatWidget() {
                     >
                       <div
                         className={cn(
-                          "max-w-[80%] rounded-2xl px-3 py-2 text-sm shadow-sm",
+                          "max-w-[80%] rounded-lg px-3 py-2 text-sm shadow-sm",
                           message.role === "user"
                             ? "bg-primary text-primary-foreground"
                             : "bg-muted text-foreground",
@@ -97,20 +97,20 @@ export function ChatWidget() {
                   <div ref={messagesEndRef} />
                 </div>
               ) : (
-                <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-border/60 bg-muted/30 px-4 py-6 text-center text-sm text-muted-foreground">
+                <div className="flex flex-col items-center gap-4 rounded-lg border border-dashed border-border/60 bg-muted/30 px-4 py-6 text-center text-sm text-muted-foreground">
                   <Sparkles className="h-5 w-5 text-primary" />
                   <p>
                     Start the conversation to get tailored insights across
                     incidents, analytics, and alerts.
                   </p>
-                  <div className="flex flex-wrap justify-center gap-2">
+                  <div className="flex flex-wrap justify-center gap-3">
                     {SUGGESTED_PROMPTS.map((prompt) => (
                       <Button
                         key={prompt}
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="rounded-full text-xs"
+                        className="rounded-md text-xs"
                         onClick={() => {
                           setInput(prompt);
                           setIsOpen(true);
@@ -133,18 +133,18 @@ export function ChatWidget() {
               onSubmit={handleSubmit}
               className="border-t border-border/60 bg-background/90 px-4 py-3"
             >
-              <div className="flex items-end gap-3">
+              <div className="flex items-end gap-4">
                 <textarea
                   value={currentInput}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder="Ask about incidents, analytics, or alerts..."
-                  className="h-[60px] flex-1 resize-none rounded-2xl border border-border/60 bg-background px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  className="h-[60px] flex-1 resize-none rounded-lg border border-border/60 bg-background px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                   aria-label="Chat input"
                 />
                 <Button
                   type="submit"
                   disabled={isLoading || trimmedInput.length === 0}
-                  className="rounded-2xl px-5"
+                  className="rounded-md px-4"
                 >
                   {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -158,7 +158,7 @@ export function ChatWidget() {
                   <button
                     key={`suggestion-${prompt}`}
                     type="button"
-                    className="rounded-full bg-muted px-3 py-1 text-xs transition hover:bg-muted/60"
+                    className="rounded-md bg-muted px-3 py-1 text-xs transition hover:bg-muted/60"
                     onClick={() => setInput(prompt)}
                   >
                     {prompt}

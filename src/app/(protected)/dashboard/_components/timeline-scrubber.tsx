@@ -30,8 +30,8 @@ export function TimelineScrubber({
   const disablePlayback = ticks.length < 2;
 
   return (
-    <div className="space-y-4 rounded-xl border border-border/60 bg-muted/10 p-4 shadow-sm">
-      <div className="flex items-center justify-between gap-3">
+    <div className="space-y-4 rounded-xl border border-border/60 bg-muted/10 p-5 shadow-sm">
+      <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Timeline scrubber
@@ -52,7 +52,7 @@ export function TimelineScrubber({
           {isPlaying ? "Pause" : "Play"}
         </Button>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <span className="shrink-0 text-xs text-muted-foreground">
           {startLabel}
         </span>
