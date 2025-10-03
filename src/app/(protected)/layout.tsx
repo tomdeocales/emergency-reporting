@@ -73,17 +73,19 @@ export default async function ProtectedLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-muted/30">
+    <div className="flex min-h-screen bg-muted/20">
       <a className="skip-nav" href="#main-content">
         Skip to main content
       </a>
-      <aside className="hidden w-64 flex-col border-r border-border bg-background/90 px-4 py-6 md:flex">
+      <aside className="hidden w-72 flex-col gap-6 border-r border-border/80 bg-sidebar px-6 py-8 shadow-sm md:flex">
         <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
           Navigation
         </span>
-        <SidebarNav items={navItems} />
+        <div className="flex-1 overflow-y-auto pr-2">
+          <SidebarNav items={navItems} />
+        </div>
       </aside>
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col gap-6 px-4 pb-10 pt-6 md:px-12">
         <TopBar
           datasetLabel="MetroFire Mock · Q1"
           datasetOptions={datasetOptions}
@@ -91,12 +93,18 @@ export default async function ProtectedLayout({
           status={{ label: "Idle", tone: "idle" }}
           user={{ name: user.name, role: user.role }}
         />
-        <div className="flex flex-1 flex-col gap-4 px-4 pb-8 pt-6 md:px-8">
+        <div className="flex flex-1 flex-col gap-6">
           <div className="md:hidden">
             <SidebarNav items={navItems} />
           </div>
-          <main id="main-content" className="flex-1" tabIndex={-1}>
-            {children}
+          <main
+            id="main-content"
+            className="flex-1 rounded-3xl border border-border/70 bg-background/95 p-6 shadow-md ring-1 ring-border/40 backdrop-blur md:p-10"
+            tabIndex={-1}
+          >
+            <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
+              {children}
+            </div>
           </main>
         </div>
       </div>

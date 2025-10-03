@@ -111,7 +111,7 @@ export function TopBar({
   const notificationItems = notifications ?? [];
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-border bg-background px-6">
+    <header className="flex h-16 items-center justify-between rounded-3xl border border-border/70 bg-background/95 px-6 shadow-sm ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:px-8">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2 text-sm font-semibold">
           <Radio className="h-4 w-4 text-primary" aria-hidden />
@@ -136,7 +136,7 @@ export function TopBar({
           {status.label}
         </span>
       </div>
-      <div className="flex items-center gap-3 text-sm">
+      <div className="flex items-center gap-4 text-sm">
         <NotificationsDropdown
           notifications={notificationItems}
           unread={unread}
@@ -164,7 +164,7 @@ function DatasetDropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="hidden items-center gap-2 px-3 text-sm md:flex"
+          className="hidden items-center gap-2 rounded-full px-4 py-2 text-sm md:flex"
           aria-label="Switch dataset"
         >
           {label}
@@ -216,7 +216,7 @@ function NotificationsDropdown({
         <Button
           variant="ghost"
           size="icon"
-          className="relative rounded-full"
+          className="relative rounded-full border border-border/60 bg-background/90 shadow-sm transition hover:border-primary/40 hover:text-primary"
           aria-label="View notifications"
         >
           <Bell className="h-5 w-5" aria-hidden />
@@ -282,7 +282,7 @@ function UserDropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex items-center gap-2 px-2 py-1 text-sm"
+          className="flex items-center gap-2 rounded-full border border-border/60 bg-background/90 px-3 py-2 text-sm shadow-sm transition hover:border-primary/40 hover:text-primary"
           aria-label="Open user menu"
         >
           <div className="flex flex-col text-right">
@@ -297,7 +297,13 @@ function UserDropdown({
           Account
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem disabled>{user.name}</DropdownMenuItem>
+        <DropdownMenuItem disabled className="flex flex-col items-start gap-1">
+          <span className="text-sm font-medium text-foreground">
+            {user.name}
+          </span>
+          <span className="text-xs text-muted-foreground">{user.role}</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={onSignOut}>Sign out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
