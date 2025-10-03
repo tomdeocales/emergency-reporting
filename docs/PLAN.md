@@ -46,12 +46,12 @@ Key deliverables:
 - [x] Add searchable incident table with filters synced to URL + Redux UI slice.
 - [x] Implement zone detail drawer with charts using recharts or equivalent primitives. *(Drawer surfaces status & priority breakdown plus latest activity; swap to chart lib later.)*
 
-### M4. Analytics & Alerts *(Status: Todo)*
+### M4. Analytics & Alerts *(Status: Done)*
 Focus: expose trend analysis and alert configuration for leadership.
 Key deliverables:
-- [ ] `/analytics` route for historical metrics, comparisons, and export controls.
-- [ ] `/alerts` route with alert rule builder, notification previews, and mock Notification API hook.
-- [ ] Shared export utilities for CSV/JSON/PNG outputs.
+- [x] `/analytics` route for historical metrics, comparisons, and export controls. *(Analytics overview ships with timeframe selector, summary cards, and export previews.)*
+- [x] `/alerts` route with alert rule builder, notification previews, and mock Notification API hook. *(Interactive rule builder persists locally and fires mock notifications.)*
+- [x] Shared export utilities for CSV/JSON/PNG outputs. *(Reusable helpers power dashboard and analytics exports.)*
 
 ### M5. QA, Polish & Handoff *(Status: Todo)*
 Focus: finalize usability, documentation, and deployment readiness.

@@ -13,6 +13,6 @@ Status values: `Done`, `In Progress`, `Todo`, `Blocked`.
 | T6 | Build incident intake workflow under `(protected)/incidents` | Incidents | Done | Upload workspace now handles CSV mapping, validation, and toasts. |
 | T7 | Seed mock incident datasets & server fetch helpers | Incidents | Done | Added mock dataset with service layer loaders and quality summary helpers. |
 | T8 | Create operations dashboard with heatmap and incident table | Dashboard | Done | Heatmap, filters, timeline playback, and zone drawer are live on `/dashboard`. |
-| T9 | Deliver analytics & alerts features | Analytics | Todo | `/analytics` metrics and `/alerts` rule builder. |
+| T9 | Deliver analytics & alerts features | Analytics | Done | `/analytics` dashboards and `/alerts` rule builder now live with export helpers. |
 | T10 | Run accessibility/performance pass and document QA | QA | Todo | Finalize milestone M5. |
 | T11 | Update README with project-specific instructions | Docs | Todo | Capture setup, scripts, and manual QA notes. |
