@@ -92,14 +92,12 @@ export default async function ProtectedLayout({
         />
       </aside>
       <div className="md:pl-[18rem] flex min-h-screen flex-1 flex-col gap-6 px-4 pb-10 pt-6 md:pl-[20rem] md:px-12">
-        <div className="sticky top-0 z-40">
-          <TopBar
-            datasetLabel="MetroFire Mock · Q1"
-            datasetOptions={datasetOptions}
-            status={{ label: "Idle", tone: "idle" }}
-            user={{ name: user.name, role: user.role }}
-          />
-        </div>
+        <TopBar
+          datasetLabel="MetroFire Mock · Q1"
+          datasetOptions={datasetOptions}
+          status={{ label: "Idle", tone: "idle" }}
+          user={{ name: user.name, role: user.role }}
+        />
         <div className="flex flex-1 flex-col gap-6">
           <div className="md:hidden">
             <SidebarNav items={navItems} />
