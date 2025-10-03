@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,8 @@ import type { OperationsSnapshot } from "@/types/dashboard";
 import { IncidentsTable } from "../_components/incidents-table";
 import { MapPanel } from "../_components/map-panel";
 import { SummaryCards } from "../_components/summary-cards";
+import { TimelineScrubber } from "../_components/timeline-scrubber";
+import { ZoneDrawer } from "../_components/zone-drawer";
 
 export function OperationsShell({
   snapshot,
@@ -17,6 +19,91 @@ export function OperationsShell({
 }) {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const timelineTicks = useMemo(() => {
+    const formatter = new Intl.DateTimeFormat(undefined, {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+
+    const sorted = snapshot.incidents
+      .map((incident) => {
+        const timestamp = Date.parse(incident.reportedAt);
+        if (Number.isNaN(timestamp)) {
+          return null;
+        }
+        return {
+          value: timestamp,
+          label: formatter.format(new Date(timestamp)),
+        };
+      })
+      .filter(
+        (entry): entry is { value: number; label: string } => entry !== null,
+      )
+      .sort((first, second) => first.value - second.value);
+
+    const deduped: { value: number; label: string }[] = [];
+    let lastValue: number | null = null;
+
+    for (const entry of sorted) {
+      if (lastValue === entry.value) {
+        continue;
+      }
+      deduped.push(entry);
+      lastValue = entry.value;
+    }
+
+    return deduped;
+  }, [snapshot.incidents]);
+
+  const [timelineIndex, setTimelineIndex] = useState(() =>
+    timelineTicks.length ? Math.max(timelineTicks.length - 1, 0) : 0,
+  );
+
+  useEffect(() => {
+    if (!timelineTicks.length) {
+      setTimelineIndex(0);
+      setIsPlaying(false);
+      return;
+    }
+
+    setTimelineIndex((current) => {
+      if (current >= timelineTicks.length) {
+        return timelineTicks.length - 1;
+      }
+      return current;
+    });
+  }, [timelineTicks.length]);
+
+  useEffect(() => {
+    if (!isPlaying) {
+      return;
+    }
+
+    if (timelineTicks.length < 2) {
+      setIsPlaying(false);
+      return;
+    }
+
+    const totalTicks = timelineTicks.length;
+    const interval = window.setInterval(() => {
+      setTimelineIndex((current) => (current + 1) % totalTicks);
+    }, 1800);
+
+    return () => window.clearInterval(interval);
+  }, [isPlaying, timelineTicks.length]);
+
+  useEffect(() => {
+    if (timelineTicks.length < 2 && isPlaying) {
+      setIsPlaying(false);
+    }
+  }, [timelineTicks.length, isPlaying]);
+
+  const activeTimelineValue =
+    timelineTicks[timelineIndex]?.value ?? Number.POSITIVE_INFINITY;
+  const activeTimelineLabel = timelineTicks[timelineIndex]?.label ?? "";
 
   const filteredIncidents = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
@@ -28,11 +115,21 @@ export function OperationsShell({
         ? incident.id.toLowerCase().includes(normalizedSearch) ||
           incident.type.toLowerCase().includes(normalizedSearch)
         : true;
-      return matchesType && matchesSearch;
+      const reportedTime = Date.parse(incident.reportedAt);
+      const matchesTimeline = Number.isNaN(reportedTime)
+        ? true
+        : reportedTime <= activeTimelineValue;
+
+      return matchesType && matchesSearch && matchesTimeline;
     });
-  }, [snapshot.incidents, search, typeFilter]);
+  }, [snapshot.incidents, search, typeFilter, activeTimelineValue]);
 
   const totalActive = filteredIncidents.length;
+
+  const handleTimelineChange = (index: number) => {
+    setTimelineIndex(index);
+    setIsPlaying(false);
+  };
 
   return (
     <div className="space-y-8">
@@ -47,6 +144,11 @@ export function OperationsShell({
                 Heatmap of the latest incidents by priority. Select a filter to
                 focus the view.
               </p>
+              {activeTimelineLabel ? (
+                <p className="text-xs text-muted-foreground">
+                  Timeline set through {activeTimelineLabel}.
+                </p>
+              ) : null}
             </div>
             <div className="flex items-center gap-3 text-sm">
               <span className="rounded-full bg-primary/10 px-3 py-1 font-medium text-primary">
@@ -57,6 +159,13 @@ export function OperationsShell({
               </Button>
             </div>
           </header>
+          <TimelineScrubber
+            ticks={timelineTicks}
+            activeIndex={timelineIndex}
+            onIndexChange={handleTimelineChange}
+            isPlaying={isPlaying}
+            onTogglePlay={() => setIsPlaying((previous) => !previous)}
+          />
           <MapPanel incidents={filteredIncidents} className="shadow-sm" />
         </div>
         <div className="space-y-3">
@@ -107,12 +216,24 @@ export function OperationsShell({
               dataset.
             </p>
           </div>
-          <Button type="button" variant="ghost" size="sm">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsDrawerOpen(true)}
+          >
             View full log
           </Button>
         </header>
         <IncidentsTable incidents={filteredIncidents} />
       </section>
+
+      <ZoneDrawer
+        open={isDrawerOpen}
+        onOpenChange={setIsDrawerOpen}
+        incidents={filteredIncidents}
+        scopeLabel={activeTimelineLabel || undefined}
+      />
     </div>
   );
 }

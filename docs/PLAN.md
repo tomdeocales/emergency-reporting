@@ -39,12 +39,12 @@ Key deliverables:
 - [x] Model mock incident data under `public/data` and associated `src/server` fetch helpers.
 - [x] Build quality summary panels and toast flows that confirm submissions.
 
-### M3. Operations Dashboards *(Status: In Progress)*
+### M3. Operations Dashboards *(Status: Done)*
 Focus: provide command-center visibility into active incidents and resources.
 Key deliverables:
-- [ ] Deliver `/dashboard` view with key metrics, heatmap, and timeline slider (mock data). *(Heatmap + filters live; timeline scrubber pending).* 
+- [x] Deliver `/dashboard` view with key metrics, heatmap, and timeline slider (mock data). *(Heatmap, filters, and timeline playback now ship together.)* 
 - [x] Add searchable incident table with filters synced to URL + Redux UI slice.
-- [ ] Implement zone detail drawer with charts using recharts or equivalent primitives.
+- [x] Implement zone detail drawer with charts using recharts or equivalent primitives. *(Drawer surfaces status & priority breakdown plus latest activity; swap to chart lib later.)*
 
 ### M4. Analytics & Alerts *(Status: Todo)*
 Focus: expose trend analysis and alert configuration for leadership.
