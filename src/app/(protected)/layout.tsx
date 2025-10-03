@@ -96,7 +96,6 @@ export default async function ProtectedLayout({
           datasetLabel="MetroFire Mock · Q1"
           datasetOptions={datasetOptions}
           status={{ label: "Idle", tone: "idle" }}
-          user={{ name: user.name, role: user.role }}
         />
         <div className="flex flex-1 flex-col gap-6">
           <div className="md:hidden">

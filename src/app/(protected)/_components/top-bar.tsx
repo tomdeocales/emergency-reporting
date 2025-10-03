@@ -27,17 +27,12 @@ export function TopBar({
   datasetLabel,
   datasetOptions,
   status,
-  user,
 }: {
   datasetLabel: string;
   datasetOptions?: DatasetOption[];
   status: {
     label: string;
     tone: StatusTone;
-  };
-  user: {
-    name: string;
-    role: string;
   };
 }) {
   const options = useMemo(() => {
