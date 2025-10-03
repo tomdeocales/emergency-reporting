@@ -114,14 +114,14 @@ export default async function ProtectedLayout({
           />
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset className="flex h-svh flex-1 flex-col overflow-hidden bg-muted/15">
-        <div className="flex h-full flex-1 flex-col gap-6 overflow-hidden px-4 pb-6 pt-8 md:px-10">
+      <SidebarInset className="bg-muted/15">
+        <div className="flex min-h-screen flex-1 flex-col gap-8 px-4 pb-12 pt-8 md:px-10">
           <TopBar
             datasetLabel="MetroFire Mock · Q1"
             datasetOptions={datasetOptions}
             status={{ label: "Idle", tone: "idle" }}
           />
-          <div className="flex flex-1 flex-col gap-6 overflow-hidden">
+          <div className="flex flex-1 flex-col gap-6">
             <div className="md:hidden">
               <SidebarNav items={navItems} />
             </div>
@@ -135,9 +135,7 @@ export default async function ProtectedLayout({
               </div>
             </main>
           </div>
-          <div className="shrink-0">
-            <ChatWidget />
-          </div>
+          <ChatWidget />
         </div>
       </SidebarInset>
     </SidebarProvider>
