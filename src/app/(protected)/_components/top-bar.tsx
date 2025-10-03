@@ -90,12 +90,6 @@ export function TopBar({
           {status.label}
         </span>
       </div>
-      <div className="hidden flex-col items-end text-xs md:flex">
-        <span className="text-sm font-semibold text-foreground">
-          {user.name}
-        </span>
-        <span className="text-muted-foreground">{user.role}</span>
-      </div>
     </header>
   );
 }
