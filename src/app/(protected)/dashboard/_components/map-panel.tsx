@@ -16,12 +16,15 @@ const CIRCLE_LAYER_ID = "dashboard-incidents-points";
 export function MapPanel({
   incidents,
   className,
+  shouldFitToData = true,
 }: {
   incidents: IncidentRecord[];
   className?: string;
+  shouldFitToData?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapInstance | null>(null);
+  const hasFitRef = useRef(false);
 
   const geojson = buildGeoJson(incidents);
 
@@ -47,6 +50,7 @@ export function MapPanel({
       const initialData = buildGeoJson(incidents);
       addSourcesAndLayers(map, initialData);
       fitToData(map, incidents);
+      hasFitRef.current = true;
     });
 
     mapRef.current = map;
@@ -63,16 +67,22 @@ export function MapPanel({
 
     if (map.isStyleLoaded()) {
       updateSource(map, geojson);
-      fitToData(map, incidents);
+      if (shouldFitToData || !hasFitRef.current) {
+        fitToData(map, incidents);
+        hasFitRef.current = true;
+      }
     } else {
       const onLoad = () => {
         addSourcesAndLayers(map, geojson);
-        fitToData(map, incidents);
+        if (shouldFitToData || !hasFitRef.current) {
+          fitToData(map, incidents);
+          hasFitRef.current = true;
+        }
         map.off("load", onLoad);
       };
       map.on("load", onLoad);
     }
-  }, [geojson, incidents]);
+  }, [geojson, incidents, shouldFitToData]);
 
   return (
     <div

@@ -166,7 +166,11 @@ export function OperationsShell({
             isPlaying={isPlaying}
             onTogglePlay={() => setIsPlaying((previous) => !previous)}
           />
-          <MapPanel incidents={filteredIncidents} className="shadow-sm" />
+          <MapPanel
+            incidents={filteredIncidents}
+            className="shadow-sm"
+            shouldFitToData={!isPlaying}
+          />
         </div>
         <div className="space-y-3">
           <h2 className="text-lg font-semibold">Filters</h2>
