@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { ChatWidget } from "./_components/chat-widget";
 import { type NavItem, SidebarNav } from "./_components/sidebar-nav";
 import { TopBar } from "./_components/top-bar";
 
@@ -107,6 +108,7 @@ export default async function ProtectedLayout({
             </div>
           </main>
         </div>
+        <ChatWidget />
       </div>
     </div>
   );

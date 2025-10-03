@@ -37,7 +37,18 @@ Folder conventions are documented in `docs/FILE-STRUCTURE.md`; UI best practices
 - Reduced motion preferences collapse transitions and animations automatically.
 
 ## Data & Environment
-Mock data resides in `public/data/mock-incidents.json` and is loaded via server services. No external services are required; leave `.env.local` empty unless you add integrations.
+Mock data resides in `public/data/mock-incidents.json` and is loaded via server services.
+
+Add a `.env.local` file with:
+
+```bash
+CONTEXT7_API_KEY=your_context7_api_key
+# optional overrides
+# CONTEXT7_API_BASE_URL=https://api.context7.com/v1
+# CONTEXT7_MODEL=gpt-4.1-mini
+```
+
+The chat widget uses Context7's API via the Vercel AI SDK; keep credentials out of version control.
 
 ## Deployment Notes
 Run `pnpm build && pnpm start` as a smoke test prior to shipping. When deploying to Vercel, ensure analytics and alerts routes remain behind the `(protected)` guard and provide opt-in notification flows for demos.
