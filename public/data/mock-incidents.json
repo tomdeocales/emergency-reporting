@@ -1,0 +1,110 @@
+[
+  {
+    "id": "INC-20240101-001",
+    "reportedAt": "2024-01-01T00:15:00Z",
+    "latitude": 40.7142,
+    "longitude": -74.0031,
+    "type": "Fire",
+    "priority": 2,
+    "status": "Dispatched"
+  },
+  {
+    "id": "INC-20240101-002",
+    "reportedAt": "2024-01-01T00:28:00Z",
+    "latitude": 40.7198,
+    "longitude": -74.0112,
+    "type": "EMS",
+    "priority": 1,
+    "status": "Cleared"
+  },
+  {
+    "id": "INC-20240101-003",
+    "reportedAt": "2024-01-01T00:41:00Z",
+    "latitude": 40.7061,
+    "longitude": -74.0099,
+    "type": "Hazmat",
+    "priority": 3,
+    "status": "Investigating"
+  },
+  {
+    "id": "INC-20240101-004",
+    "reportedAt": "2024-01-01T01:05:00Z",
+    "latitude": 40.7333,
+    "longitude": -74.0044,
+    "type": "Fire",
+    "priority": 2,
+    "status": "Dispatched"
+  },
+  {
+    "id": "INC-20240101-005",
+    "reportedAt": "2024-01-01T01:22:00Z",
+    "latitude": 40.7351,
+    "longitude": -74.0027,
+    "type": "Other",
+    "priority": 3,
+    "status": "Logged"
+  },
+  {
+    "id": "INC-20240101-006",
+    "reportedAt": "2024-01-01T01:37:00Z",
+    "latitude": 40.7299,
+    "longitude": -74.0121,
+    "type": "EMS",
+    "priority": 1,
+    "status": "Dispatched"
+  },
+  {
+    "id": "INC-20240101-007",
+    "reportedAt": "2024-01-01T01:51:00Z",
+    "latitude": 40.7215,
+    "longitude": -74.0068,
+    "type": "Fire",
+    "priority": 2,
+    "status": "Cleared"
+  },
+  {
+    "id": "INC-20240101-008",
+    "reportedAt": "2024-01-01T02:06:00Z",
+    "latitude": 40.7129,
+    "longitude": -74.0015,
+    "type": "EMS",
+    "priority": 2,
+    "status": "Investigating"
+  },
+  {
+    "id": "INC-20240101-009",
+    "reportedAt": "2024-01-01T02:20:00Z",
+    "latitude": 40.7092,
+    "longitude": -74.0135,
+    "type": "Fire",
+    "priority": 1,
+    "status": "Dispatched"
+  },
+  {
+    "id": "INC-20240101-010",
+    "reportedAt": "2024-01-01T02:42:00Z",
+    "latitude": 40.7278,
+    "longitude": -74.0089,
+    "type": "Traffic",
+    "priority": 3,
+    "status": "Logged"
+  },
+  {
+    "id": "INC-20240101-011",
+    "reportedAt": "2024-01-01T03:01:00Z",
+    "latitude": 91,
+    "longitude": -73.998,
+    "type": "EMS",
+    "priority": 1,
+    "status": "Dispatched"
+  },
+  {
+    "id": "INC-20240101-012",
+    "reportedAt": "2024-01-01T03:19:00Z",
+    "latitude": 40.7301,
+    "longitude": null,
+    "type": "Fire",
+    "priority": 2,
+    "status": "Investigating"
+  }
+]
