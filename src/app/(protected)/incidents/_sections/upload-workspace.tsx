@@ -89,11 +89,23 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
   const qualityIssues = quality.issues.slice(0, 4);
 
   const coordinateSummary = useMemo(() => {
-    const valid = incidents.filter(
-      (incident) =>
-        typeof incident.latitude === "number" &&
-        typeof incident.longitude === "number",
-    );
+    const valid = incidents.filter((incident) => {
+      if (
+        typeof incident.latitude !== "number" ||
+        typeof incident.longitude !== "number"
+      ) {
+        return false;
+      }
+
+      return (
+        Number.isFinite(incident.latitude) &&
+        Number.isFinite(incident.longitude) &&
+        incident.latitude >= -90 &&
+        incident.latitude <= 90 &&
+        incident.longitude >= -180 &&
+        incident.longitude <= 180
+      );
+    });
     if (!valid.length) {
       return null;
     }

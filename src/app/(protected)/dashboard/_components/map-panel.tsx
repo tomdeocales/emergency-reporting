@@ -83,26 +83,17 @@ export function MapPanel({
 }
 
 function buildGeoJson(incidents: IncidentRecord[]) {
-  const features = incidents
-    .filter(
-      (incident) =>
-        typeof incident.longitude === "number" &&
-        typeof incident.latitude === "number",
-    )
-    .map((incident) => ({
-      type: "Feature" as const,
-      geometry: {
-        type: "Point" as const,
-        coordinates: [
-          incident.longitude as number,
-          incident.latitude as number,
-        ],
-      },
-      properties: {
-        id: incident.id,
-        priority: incident.priority,
-      },
-    }));
+  const features = incidents.filter(hasValidCoordinates).map((incident) => ({
+    type: "Feature" as const,
+    geometry: {
+      type: "Point" as const,
+      coordinates: [incident.longitude as number, incident.latitude as number],
+    },
+    properties: {
+      id: incident.id,
+      priority: incident.priority,
+    },
+  }));
 
   return {
     type: "FeatureCollection" as const,
@@ -187,11 +178,7 @@ function updateSource(
 }
 
 function fitToData(map: MapInstance, incidents: IncidentRecord[]) {
-  const valid = incidents.filter(
-    (incident) =>
-      typeof incident.longitude === "number" &&
-      typeof incident.latitude === "number",
-  );
+  const valid = incidents.filter(hasValidCoordinates);
 
   if (!valid.length) {
     return;
@@ -212,4 +199,20 @@ function fitToData(map: MapInstance, incidents: IncidentRecord[]) {
     maxZoom: 14,
     duration: 800,
   });
+}
+
+function hasValidCoordinates(incident: IncidentRecord) {
+  const { latitude, longitude } = incident;
+  if (typeof latitude !== "number" || typeof longitude !== "number") {
+    return false;
+  }
+
+  return (
+    Number.isFinite(latitude) &&
+    Number.isFinite(longitude) &&
+    latitude >= -90 &&
+    latitude <= 90 &&
+    longitude >= -180 &&
+    longitude <= 180
+  );
 }
