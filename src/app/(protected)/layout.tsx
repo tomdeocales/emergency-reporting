@@ -79,7 +79,7 @@ export default async function ProtectedLayout({
       <a className="skip-nav" href="#main-content">
         Skip to main content
       </a>
-      <aside className="hidden w-72 flex-col gap-6 border-r border-border/60 bg-sidebar/95 px-6 py-8 shadow-lg ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:flex">
+      <aside className="fixed inset-y-0 left-0 hidden w-72 flex-col gap-6 border-r border-border/60 bg-sidebar/95 px-6 py-8 shadow-lg ring-1 ring-border/30 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:flex">
         <div className="flex flex-col gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
           <span>Navigation</span>
         </div>
@@ -91,20 +91,22 @@ export default async function ProtectedLayout({
           notifications={notifications}
         />
       </aside>
-      <div className="flex flex-1 flex-col gap-6 px-4 pb-10 pt-6 md:px-12">
-        <TopBar
-          datasetLabel="MetroFire Mock · Q1"
-          datasetOptions={datasetOptions}
-          status={{ label: "Idle", tone: "idle" }}
-          user={{ name: user.name, role: user.role }}
-        />
+      <div className="md:pl-[18rem] flex min-h-screen flex-1 flex-col gap-6 px-4 pb-10 pt-6 md:pl-[20rem] md:px-12">
+        <div className="sticky top-0 z-40">
+          <TopBar
+            datasetLabel="MetroFire Mock · Q1"
+            datasetOptions={datasetOptions}
+            status={{ label: "Idle", tone: "idle" }}
+            user={{ name: user.name, role: user.role }}
+          />
+        </div>
         <div className="flex flex-1 flex-col gap-6">
           <div className="md:hidden">
             <SidebarNav items={navItems} />
           </div>
           <main
             id="main-content"
-            className="flex-1 rounded-3xl border border-border/70 bg-background/95 p-6 shadow-md ring-1 ring-border/40 backdrop-blur md:p-10"
+            className="flex-1 overflow-y-auto rounded-3xl border border-border/70 bg-background/95 p-6 shadow-md ring-1 ring-border/40 backdrop-blur md:p-10"
             tabIndex={-1}
           >
             <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
