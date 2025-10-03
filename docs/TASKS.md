@@ -15,4 +15,4 @@ Status values: `Done`, `In Progress`, `Todo`, `Blocked`.
 | T8 | Create operations dashboard with heatmap and incident table | Dashboard | Done | Heatmap, filters, timeline playback, and zone drawer are live on `/dashboard`. |
 | T9 | Deliver analytics & alerts features | Analytics | Done | `/analytics` dashboards and `/alerts` rule builder now live with export helpers. |
 | T10 | Run accessibility/performance pass and document QA | QA | Done | Skip link & reduced-motion polish shipped; manual runbook lives in `docs/QA-CHECKLIST.md`. |
-| T11 | Update README with project-specific instructions | Docs | Todo | Capture setup, scripts, and manual QA notes. |
+| T11 | Update README with project-specific instructions | Docs | Done | README now documents setup, feature surfaces, scripts, and QA checklist. |

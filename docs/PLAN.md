@@ -53,12 +53,12 @@ Key deliverables:
 - [x] `/alerts` route with alert rule builder, notification previews, and mock Notification API hook. *(Interactive rule builder persists locally and fires mock notifications.)*
 - [x] Shared export utilities for CSV/JSON/PNG outputs. *(Reusable helpers power dashboard and analytics exports.)*
 
-### M5. QA, Polish & Handoff *(Status: In Progress)*
+### M5. QA, Polish & Handoff *(Status: Done)*
 Focus: finalize usability, documentation, and deployment readiness.
 Key deliverables:
 - [x] Accessibility pass (keyboard, focus states, contrast) and performance smoke tests. *(Skip link + focus outlines wired; reduced motion fallback added.)*
 - [x] Manual QA checklist covering all routes and critical flows. *(See `docs/QA-CHECKLIST.md` for latest runbook.)*
-- [ ] Update README with setup, scripts, and demo instructions; attach screenshots or Loom.
+- [x] Update README with setup, scripts, and demo instructions; attach screenshots or Loom. *(README now captures setup, feature map, and QA references.)*
 
 ## Enablers & Dependencies
 - Mock geospatial layers (GeoJSON or grid tiles) required before heatmap work begins.

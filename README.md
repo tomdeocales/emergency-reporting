@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Emergency Reporting Console
 
-## Getting Started
+A Next.js App Router demo for municipal emergency operations. The experience covers intake, live monitoring, analytics, and alerting flows powered by deterministic mock data so stakeholders can rehearse incident response offline.
 
-First, run the development server:
+## Prerequisites
+- Node.js 18.17+
+- pnpm 8+
 
+## Setup
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
+Visit http://localhost:3000 to explore the console. Protected routes live under `/dashboard`, `/incidents`, `/analytics`, and `/alerts`; the marketing splash remains at `/`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
+| Command | Purpose |
+| --- | --- |
+| `pnpm dev` | Run the local development server with Turbopack. |
+| `pnpm lint` | Execute Biome (format + lint); required before pushing. |
+| `pnpm build` | Generate the production bundle. |
+| `pnpm start` | Serve the production build locally. |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Feature Surfaces
+- **Incident intake**: Upload CSVs, validate schema, and review quality summaries under `/incidents`.
+- **Operations dashboard**: Real-time map, timeline playback, and incident log drawer at `/dashboard`.
+- **Analytics**: Timeframe selector, volume/response tables, and export previews at `/analytics`.
+- **Alerts**: Rule builder with mock notification preview at `/alerts`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Folder conventions are documented in `docs/FILE-STRUCTURE.md`; UI best practices live in `docs/FRONTEND-BEST-PRACTICES.md`.
 
-## Learn More
+## QA & Accessibility
+- Manual smoke checklist: `docs/QA-CHECKLIST.md`.
+- Keyboard users can rely on the skip link (`Tab` from page load) and consistent focus outlines.
+- Reduced motion preferences collapse transitions and animations automatically.
 
-To learn more about Next.js, take a look at the following resources:
+## Data & Environment
+Mock data resides in `public/data/mock-incidents.json` and is loaded via server services. No external services are required; leave `.env.local` empty unless you add integrations.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment Notes
+Run `pnpm build && pnpm start` as a smoke test prior to shipping. When deploying to Vercel, ensure analytics and alerts routes remain behind the `(protected)` guard and provide opt-in notification flows for demos.
