@@ -20,7 +20,6 @@ export function ChatWidget() {
   const {
     messages,
     input: rawInput,
-    handleInputChange,
     handleSubmit,
     isLoading,
     setInput,
@@ -137,7 +136,7 @@ export function ChatWidget() {
               <div className="flex items-end gap-3">
                 <textarea
                   value={currentInput}
-                  onChange={handleInputChange}
+                  onChange={(event) => setInput(event.target.value)}
                   placeholder="Ask about incidents, analytics, or alerts..."
                   className="h-[60px] flex-1 resize-none rounded-2xl border border-border/60 bg-background px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                   aria-label="Chat input"
