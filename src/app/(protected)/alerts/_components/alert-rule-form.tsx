@@ -30,7 +30,7 @@ export function AlertRuleForm({
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   feedback: { status: "success" | "error"; message: string } | null;
   permission: NotificationPermission;
-  onRequestPermission: () => void | Promise<unknown>;
+  onRequestPermission: () => undefined | Promise<unknown>;
 }) {
   const channels: AlertChannel[] = ["sms", "email", "push"];
 

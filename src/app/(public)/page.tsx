@@ -1,3 +1,4 @@
+import { Activity, TrendingUp, Upload } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type * as React from "react";
@@ -10,8 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import { Activity, TrendingUp, Upload } from "lucide-react";
 
 type Highlight = {
   title: string;
@@ -48,7 +47,10 @@ export default function LandingPage() {
   return (
     <div className="relative isolate bg-gradient-to-b from-background to-muted/40">
       {/* background brand accent */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
         <div className="absolute left-1/2 top-[-8rem] h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(220,38,38,0.08),transparent_70%)] blur-2xl" />
       </div>
 
@@ -76,7 +78,11 @@ export default function LandingPage() {
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Button size="lg" asChild className="bg-red-600 text-white hover:bg-red-700 border-transparent">
+          <Button
+            size="lg"
+            asChild
+            className="bg-red-600 text-white hover:bg-red-700 border-transparent"
+          >
             <Link href="/dashboard">Enter command center</Link>
           </Button>
           <Button
@@ -88,7 +94,6 @@ export default function LandingPage() {
             <Link href="#capabilities">View capabilities</Link>
           </Button>
         </div>
-
       </header>
 
       <main id="capabilities" className="mx-auto w-full max-w-6xl px-6 pb-24">

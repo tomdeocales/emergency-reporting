@@ -31,8 +31,8 @@ export async function POST(request: NextRequest) {
 
   // Sensible defaults per provider
   const modelName = process.env.GROQ_API_KEY
-    ? process.env.GROQ_MODEL ?? "llama-3.1-8b-instant"
-    : process.env.CONTEXT7_MODEL ?? "gpt-4.1-mini";
+    ? (process.env.GROQ_MODEL ?? "llama-3.1-8b-instant")
+    : (process.env.CONTEXT7_MODEL ?? "gpt-4.1-mini");
 
   const result = await streamText({
     model: provider.chat(modelName),
@@ -43,5 +43,5 @@ export async function POST(request: NextRequest) {
     ...options,
   });
 
-  return result.toAIStreamResponse();
+  return result.toTextStreamResponse();
 }

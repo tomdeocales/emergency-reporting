@@ -64,7 +64,9 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
               aria-hidden
               className={cn(
                 "absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition-all",
-                isActive ? "bg-primary" : "bg-transparent group-hover:bg-muted-foreground/40",
+                isActive
+                  ? "bg-primary"
+                  : "bg-transparent group-hover:bg-muted-foreground/40",
               )}
             />
           </Link>

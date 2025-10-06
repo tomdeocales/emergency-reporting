@@ -1,8 +1,8 @@
 "use client";
 
-import type React from "react";
 import { useChat } from "@ai-sdk/react";
 import { Loader2, MessageCircle, Sparkles, X } from "lucide-react";
+import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -19,21 +19,42 @@ export function ChatWidget() {
   const [localInput, setLocalInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Use a lax typing here to support multiple ai-sdk versions during staging.
-  // This prevents build-time type errors on fields like `input` that may not
-  // exist in the currently installed helpers interface.
-  const chat: any = useChat({ api: "/api/chat" } as any);
-  const messages = (chat?.messages ?? []) as Array<{ id: string; role: string; content: string }>;
-  const rawInput = (chat?.input ?? undefined) as string | undefined;
-  const handleSubmit = (chat?.handleSubmit ?? (() => {})) as (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
-  const handleInputChange = chat?.handleInputChange as ((e: React.ChangeEvent<HTMLTextAreaElement>) => void) | undefined;
+  // Compatibility layer for different ai-sdk versions
+  type UIMessage = { id: string; role: string; content: string };
+  type UseChatCompat = {
+    messages?: UIMessage[];
+    input?: string;
+    handleSubmit?: (
+      e: React.FormEvent<HTMLFormElement>,
+    ) => void | Promise<void>;
+    handleInputChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    isLoading?: boolean;
+    setInput?: (value: string) => void;
+    append?: (msg: { role: string; content: string }) => void | Promise<void>;
+    setMessages?: (msgs: UIMessage[]) => void;
+    error?: { message?: string };
+  };
+
+  const chat = useChat() as unknown as UseChatCompat;
+  const messages: UIMessage[] = chat?.messages ?? [];
+  const rawInput: string | undefined = chat?.input ?? undefined;
+  const handleSubmit = (chat?.handleSubmit ?? (() => {})) as (
+    e: React.FormEvent<HTMLFormElement>,
+  ) => void | Promise<void>;
+  const handleInputChange = chat?.handleInputChange as
+    | ((e: React.ChangeEvent<HTMLTextAreaElement>) => void)
+    | undefined;
   const isLoading = Boolean(chat?.isLoading);
   const setInput = chat?.setInput as ((value: string) => void) | undefined;
-  const append = chat?.append as ((msg: { role: string; content: string }) => void) | undefined;
-  const setMessages = chat?.setMessages as ((msgs: any[]) => void) | undefined;
+  const append = chat?.append as
+    | ((msg: { role: string; content: string }) => void | Promise<void>)
+    | undefined;
+  const setMessages = chat?.setMessages as
+    | ((msgs: UIMessage[]) => void)
+    | undefined;
   const error = chat?.error as { message?: string } | undefined;
 
-  const currentInput = (rawInput ?? localInput) ?? "";
+  const currentInput = rawInput ?? localInput ?? "";
   const trimmedInput = currentInput.trim();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: scroll to bottom when the message list updates.
@@ -60,9 +81,7 @@ export function ChatWidget() {
     setLocalInput(next);
   };
 
-  const onChangeInput = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (typeof handleInputChange === "function") {
       // biome-ignore lint/suspicious/noExplicitAny: handler interop
       return (handleInputChange as any)(event);
@@ -73,16 +92,15 @@ export function ChatWidget() {
 
   // Local mock mode for demo
   const MOCK_MODE = true;
-  // biome-ignore lint/suspicious/noExplicitAny: interop across ai-sdk versions
   const pushMessage = (role: "user" | "assistant", content: string) => {
     if (typeof append === "function") {
-      return append({ role, content } as any);
+      return append({ role, content });
     }
     if (typeof setMessages === "function") {
       return setMessages([
         ...messages,
         { id: `${Date.now()}-${Math.random()}`, role, content },
-      ] as any);
+      ]);
     }
   };
 
@@ -194,7 +212,14 @@ export function ChatWidget() {
                         variant="outline"
                         size="sm"
                         className="rounded-md text-xs"
-                        onClick={() => (MOCK_MODE ? submitMock(prompt) : (setInputValue(prompt), setIsOpen(true)))}
+                        onClick={() => {
+                          if (MOCK_MODE) {
+                            submitMock(prompt);
+                          } else {
+                            setInputValue(prompt);
+                            setIsOpen(true);
+                          }
+                        }}
                       >
                         {prompt}
                       </Button>
@@ -210,9 +235,14 @@ export function ChatWidget() {
               ) : null}
             </div>
             <form
-              onSubmit={(e) =>
-                MOCK_MODE ? (e.preventDefault(), submitMock(currentInput)) : handleSubmit(e)
-              }
+              onSubmit={(e) => {
+                if (MOCK_MODE) {
+                  e.preventDefault();
+                  submitMock(currentInput);
+                } else {
+                  handleSubmit(e);
+                }
+              }}
               className="border-t border-border/60 bg-background/90 px-4 py-3"
             >
               <div className="flex items-end gap-4">

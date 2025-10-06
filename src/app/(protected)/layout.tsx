@@ -94,13 +94,17 @@ export default async function ProtectedLayout({
             <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-border/50">
               <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_30%_20%,var(--primary)_0%,transparent_70%)] opacity-30" />
               <div className="absolute inset-0 bg-[conic-gradient(from_180deg_at_50%_50%,var(--primary),transparent)] opacity-30" />
-              <span className="relative z-10 text-sm font-semibold uppercase text-primary">A</span>
+              <span className="relative z-10 text-sm font-semibold uppercase text-primary">
+                A
+              </span>
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-sm font-semibold tracking-tight text-foreground">
                 Acme Response
               </span>
-              <span className="text-xs text-muted-foreground">Operations Console</span>
+              <span className="text-xs text-muted-foreground">
+                Operations Console
+              </span>
             </div>
           </div>
         </SidebarHeader>

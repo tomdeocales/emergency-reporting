@@ -78,10 +78,12 @@ export function TopBar({
         <span
           className={cn(
             "inline-flex items-center gap-2 rounded-full border px-2.5 py-0.5 text-xs font-semibold shadow-sm",
-            status.tone === "idle" && "border-border/60 bg-muted text-muted-foreground",
+            status.tone === "idle" &&
+              "border-border/60 bg-muted text-muted-foreground",
             status.tone === "validating" &&
               "border-amber-300 bg-amber-50 text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200",
-            status.tone === "running" && "border-primary/30 bg-primary/5 text-primary",
+            status.tone === "running" &&
+              "border-primary/30 bg-primary/5 text-primary",
             status.tone === "completed" &&
               "border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200",
           )}

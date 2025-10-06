@@ -45,7 +45,7 @@
 
 :root {
   --radius: 0.5rem;
-  --background: #F4F4F5;
+  --background: #f4f4f5;
   --foreground: oklch(0.24 0.02 240);
   --card: oklch(0.985 0.004 230);
   --card-foreground: oklch(0.24 0.02 240);
@@ -240,7 +240,11 @@
   pointer-events: none;
   z-index: 0;
   /* Neutral canvas with no brand tint to avoid "fleshy" cast */
-  background: linear-gradient(to bottom, var(--background) 0%, var(--background) 100%);
+  background: linear-gradient(
+    to bottom,
+    var(--background) 0%,
+    var(--background) 100%
+  );
 }
 
 /* Soft grid overlay */
@@ -250,7 +254,11 @@
   inset: 0;
   /* Layer order: top fade cover, then vertical + horizontal grid lines */
   background:
-    radial-gradient(1200px 600px at 50% 0%, color-mix(in oklab, var(--background), transparent 0%) 0%, transparent 75%),
+    radial-gradient(
+      1200px 600px at 50% 0%,
+      color-mix(in oklab, var(--background), transparent 0%) 0%,
+      transparent 75%
+    ),
     repeating-linear-gradient(
       0deg,
       color-mix(in oklab, var(--border), transparent 60%) 0px,
