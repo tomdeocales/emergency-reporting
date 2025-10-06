@@ -76,15 +76,13 @@ export function ChatWidget() {
   // biome-ignore lint/suspicious/noExplicitAny: interop across ai-sdk versions
   const pushMessage = (role: "user" | "assistant", content: string) => {
     if (typeof append === "function") {
-      // @ts-expect-error optional dep
-      return append({ role, content });
+      return append({ role, content } as any);
     }
     if (typeof setMessages === "function") {
-      // @ts-expect-error optional dep
       return setMessages([
         ...messages,
         { id: `${Date.now()}-${Math.random()}`, role, content },
-      ]);
+      ] as any);
     }
   };
 
