@@ -148,7 +148,13 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
     setValidationState("idle");
 
     const text = await file.text();
-    const result = Papa.parse<SampleRow>(text, {
+    const result = (Papa as unknown as {
+      parse: (input: string, config: unknown) => {
+        data: SampleRow[];
+        meta: { fields?: string[] };
+        errors: { message: string }[];
+      };
+    }).parse(text, {
       header: true,
       skipEmptyLines: true,
       transform: (value) => value.trim(),
