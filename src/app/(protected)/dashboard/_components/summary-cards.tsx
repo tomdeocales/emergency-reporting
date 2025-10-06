@@ -26,7 +26,7 @@ export function SummaryCards({ summary }: { summary: OperationsSummary }) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-semibold tracking-tight">
+            <div className="text-3xl font-semibold tracking-tight tabular-nums">
               {summary[key]}
             </div>
           </CardContent>

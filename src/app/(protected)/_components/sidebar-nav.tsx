@@ -46,10 +46,10 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
             key={item.href}
             href={item.href}
             className={cn(
-              "group flex items-center gap-4 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+              "group relative flex items-center gap-4 rounded-xl px-3 py-2 text-sm font-medium transition-all border",
               isActive
-                ? "bg-primary/10 text-primary ring-1 ring-primary/25"
-                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground hover:ring-1 hover:ring-border/40",
+                ? "bg-primary/10 text-primary border-primary/30 ring-1 ring-primary/25 shadow-[inset_0_0_0_1px_hsl(var(--border))]"
+                : "border-transparent text-muted-foreground hover:bg-muted/70 hover:text-foreground hover:ring-1 hover:ring-border/40",
             )}
             aria-current={isActive ? "page" : undefined}
           >
@@ -60,6 +60,13 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
               />
             ) : null}
             <span>{item.label}</span>
+            <span
+              aria-hidden
+              className={cn(
+                "absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition-all",
+                isActive ? "bg-primary" : "bg-transparent group-hover:bg-muted-foreground/40",
+              )}
+            />
           </Link>
         );
       })}

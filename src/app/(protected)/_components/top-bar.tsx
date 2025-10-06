@@ -62,7 +62,7 @@ export function TopBar({
   const active = options.find((option) => option.id === activeId) ?? options[0];
 
   return (
-    <header className="flex h-16 items-center justify-between rounded-xl border border-border/60 bg-background px-4 shadow-sm md:px-8">
+    <header className="sticky top-2 z-20 flex h-16 items-center justify-between rounded-xl border border-border/60 bg-background/80 px-4 shadow-md ring-1 ring-border/40 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:px-8">
       <div className="flex items-center gap-3 md:gap-4">
         <SidebarTrigger className="md:hidden" />
         <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -77,13 +77,13 @@ export function TopBar({
         />
         <span
           className={cn(
-            "inline-flex items-center gap-2 rounded-md px-3 py-1 text-xs font-medium",
-            status.tone === "idle" && "bg-muted text-muted-foreground",
+            "inline-flex items-center gap-2 rounded-full border px-2.5 py-0.5 text-xs font-semibold shadow-sm",
+            status.tone === "idle" && "border-border/60 bg-muted text-muted-foreground",
             status.tone === "validating" &&
-              "bg-amber-100 text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
-            status.tone === "running" && "bg-primary/10 text-primary",
+              "border-amber-300 bg-amber-50 text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200",
+            status.tone === "running" && "border-primary/30 bg-primary/5 text-primary",
             status.tone === "completed" &&
-              "bg-emerald-100 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200",
+              "border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200",
           )}
           aria-live="polite"
           aria-atomic="true"
@@ -116,8 +116,10 @@ function DatasetDropdown({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
-          className="hidden items-center gap-2 rounded-md px-3 py-2 text-sm md:flex"
+          variant="default"
+          id="dataset-menu-trigger"
+          suppressHydrationWarning
+          className="hidden items-center gap-2 rounded-md px-3 py-2 text-sm md:flex border-[#EAB308] bg-[#EAB308] text-white transition-colors hover:bg-[#FACC15] hover:border-[#FACC15] focus-visible:ring-[#FACC15]/40"
           aria-label="Switch dataset"
         >
           {active.label}

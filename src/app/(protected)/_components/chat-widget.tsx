@@ -15,18 +15,25 @@ const SUGGESTED_PROMPTS = [
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [localInput, setLocalInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const {
     messages,
     input: rawInput,
     handleSubmit,
+    handleInputChange,
     isLoading,
     setInput,
+    // The following may not exist in all versions; handled defensively
+    // biome-ignore lint/suspicious/noExplicitAny: interop across ai-sdk versions
+    append,
+    // biome-ignore lint/suspicious/noExplicitAny: interop across ai-sdk versions
+    setMessages,
     error,
   } = useChat({ api: "/api/chat" });
 
-  const currentInput = rawInput ?? "";
+  const currentInput = (rawInput ?? localInput) ?? "";
   const trimmedInput = currentInput.trim();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: scroll to bottom when the message list updates.
@@ -42,6 +49,84 @@ export function ChatWidget() {
   }, [messages.length, isOpen]);
 
   const hasMessages = useMemo(() => messages.length > 0, [messages.length]);
+
+  // Helpers to support different ai-sdk versions
+  const setInputValue = (next: string) => {
+    if (typeof setInput === "function") return setInput(next);
+    if (typeof handleInputChange === "function") {
+      // biome-ignore lint/suspicious/noExplicitAny: handler interop
+      return (handleInputChange as any)({ target: { value: next } });
+    }
+    setLocalInput(next);
+  };
+
+  const onChangeInput = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    if (typeof handleInputChange === "function") {
+      // biome-ignore lint/suspicious/noExplicitAny: handler interop
+      return (handleInputChange as any)(event);
+    }
+    if (typeof setInput === "function") return setInput(event.target.value);
+    setLocalInput(event.target.value);
+  };
+
+  // Local mock mode for demo
+  const MOCK_MODE = true;
+  // biome-ignore lint/suspicious/noExplicitAny: interop across ai-sdk versions
+  const pushMessage = (role: "user" | "assistant", content: string) => {
+    if (typeof append === "function") {
+      // @ts-expect-error optional dep
+      return append({ role, content });
+    }
+    if (typeof setMessages === "function") {
+      // @ts-expect-error optional dep
+      return setMessages([
+        ...messages,
+        { id: `${Date.now()}-${Math.random()}`, role, content },
+      ]);
+    }
+  };
+
+  const buildMockResponse = (prompt: string) => {
+    const now = new Date();
+    const hour = now.getHours().toString().padStart(2, "0");
+    const minute = now.getMinutes().toString().padStart(2, "0");
+    const mock = [
+      `Summary @ ${hour}:${minute}`,
+      "- Active incidents stable; slight uptick in priority‑2.",
+      "- Average response ~ 6–7m; downtown slower by ~1m.",
+      "- Watch zones: Midtown, North Bay interchange.",
+      "- Suggest: verify crew rotation and heat advisory banner.",
+    ];
+    if (/action|todo|item/i.test(prompt)) {
+      return [
+        "Open action items",
+        "- Validate alert rule thresholds for surge > 3/min",
+        "- Export last 24h for briefing (CSV)",
+        "- Check hospital capacity sync token (Warning)",
+      ].join("\n");
+    }
+    if (/trend|summary|summarize|insight/i.test(prompt)) {
+      return mock.join("\n");
+    }
+    return [
+      `Mock answer for: “${prompt}”`,
+      "- Data is simulated in this preview.",
+      "- Use filters to narrow to a zone or type.",
+      "- Ask for ‘open action items’ or ‘incident trends’.",
+    ].join("\n");
+  };
+
+  const submitMock = async (text: string) => {
+    const trimmed = (text ?? "").trim();
+    if (!trimmed) return;
+    pushMessage("user", trimmed);
+    setInputValue("");
+    await new Promise((r) => setTimeout(r, 350));
+    pushMessage("assistant", buildMockResponse(trimmed));
+    setIsOpen(true);
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
@@ -111,10 +196,7 @@ export function ChatWidget() {
                         variant="outline"
                         size="sm"
                         className="rounded-md text-xs"
-                        onClick={() => {
-                          setInput(prompt);
-                          setIsOpen(true);
-                        }}
+                        onClick={() => (MOCK_MODE ? submitMock(prompt) : (setInputValue(prompt), setIsOpen(true)))}
                       >
                         {prompt}
                       </Button>
@@ -130,13 +212,15 @@ export function ChatWidget() {
               ) : null}
             </div>
             <form
-              onSubmit={handleSubmit}
+              onSubmit={(e) =>
+                MOCK_MODE ? (e.preventDefault(), submitMock(currentInput)) : handleSubmit(e)
+              }
               className="border-t border-border/60 bg-background/90 px-4 py-3"
             >
               <div className="flex items-end gap-4">
                 <textarea
                   value={currentInput}
-                  onChange={(event) => setInput(event.target.value)}
+                  onChange={onChangeInput}
                   placeholder="Ask about incidents, analytics, or alerts..."
                   className="h-[60px] flex-1 resize-none rounded-lg border border-border/60 bg-background px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                   aria-label="Chat input"
@@ -159,7 +243,7 @@ export function ChatWidget() {
                     key={`suggestion-${prompt}`}
                     type="button"
                     className="rounded-md bg-muted px-3 py-1 text-xs transition hover:bg-muted/60"
-                    onClick={() => setInput(prompt)}
+                    onClick={() => setInputValue(prompt)}
                   >
                     {prompt}
                   </button>
@@ -176,7 +260,7 @@ export function ChatWidget() {
           size="icon"
           title="Chat with AI"
           aria-label="Chat with AI"
-          className="h-14 w-14 rounded-full border border-primary/30 bg-gradient-to-br from-primary via-primary/80 to-primary/60 text-primary-foreground shadow-2xl ring-1 ring-primary/50 transition hover:scale-105"
+          className="h-14 w-14 rounded-full border border-primary/30 bg-gradient-to-br from-primary via-secondary to-accent text-primary-foreground shadow-2xl ring-1 ring-primary/50 transition hover:scale-105"
           onClick={() => setIsOpen(true)}
         >
           <MessageCircle className="h-5 w-5" aria-hidden />

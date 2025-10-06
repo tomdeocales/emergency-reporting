@@ -151,7 +151,7 @@ export function OperationsShell({
               ) : null}
             </div>
             <div className="flex items-center gap-4 text-sm">
-              <span className="rounded-full bg-primary/10 px-3 py-1 font-medium text-primary">
+              <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/5 px-2.5 py-0.5 text-xs font-semibold text-primary shadow-sm">
                 {totalActive} showing
               </span>
               <Button type="button" variant="outline" size="sm">
@@ -172,9 +172,9 @@ export function OperationsShell({
             shouldFitToData={!isPlaying}
           />
         </div>
-        <div className="space-y-4">
+        <div className="sticky top-2 self-start space-y-4">
           <h2 className="text-lg font-semibold">Filters</h2>
-          <div className="space-y-4 rounded-xl border border-border/60 bg-muted/20 p-5 text-sm">
+          <div className="space-y-4 rounded-xl border border-border bg-muted/20 p-5 text-sm ring-1 ring-border/40">
             <label className="flex flex-col gap-2" htmlFor="operations-search">
               <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Search

@@ -7,7 +7,7 @@ export const Table = ({
   ...props
 }: HTMLAttributes<HTMLTableElement>) => (
   <table
-    className={cn("w-full caption-bottom text-sm", className)}
+    className={cn("w-full caption-bottom text-sm tabular-nums", className)}
     {...props}
   />
 );
@@ -17,7 +17,13 @@ export const TableHeader = ({
   className,
   ...props
 }: HTMLAttributes<HTMLTableSectionElement>) => (
-  <thead className={cn("[&_tr]:border-b", className)} {...props} />
+  <thead
+    className={cn(
+      "bg-muted/50 text-muted-foreground/90 backdrop-blur supports-[backdrop-filter]:backdrop-blur [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-xs [&_th]:font-semibold [&_th]:text-muted-foreground",
+      className,
+    )}
+    {...props}
+  />
 );
 TableHeader.displayName = "TableHeader";
 
@@ -46,7 +52,7 @@ export const TableRow = ({
 }: HTMLAttributes<HTMLTableRowElement>) => (
   <tr
     className={cn(
-      "border-b border-border transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      "border-b border-border transition-colors hover:bg-muted/80 data-[state=selected]:bg-muted odd:bg-muted/30",
       className,
     )}
     {...props}
@@ -60,7 +66,7 @@ export const TableHead = ({
 }: ThHTMLAttributes<HTMLTableCellElement>) => (
   <th
     className={cn(
-      "h-10 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      "h-10 px-6 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 first:rounded-l-lg last:rounded-r-lg",
       className,
     )}
     {...props}
@@ -73,7 +79,10 @@ export const TableCell = ({
   ...props
 }: TdHTMLAttributes<HTMLTableCellElement>) => (
   <td
-    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    className={cn(
+      "p-4 align-middle [&:has([role=checkbox])]:pr-0 first:pl-6 last:pr-6",
+      className,
+    )}
     {...props}
   />
 );

@@ -30,7 +30,7 @@ export function TimelineScrubber({
   const disablePlayback = ticks.length < 2;
 
   return (
-    <div className="space-y-4 rounded-xl border border-border/60 bg-muted/10 p-5 shadow-sm">
+    <div className="space-y-4 rounded-xl border border-border bg-muted/10 p-5 shadow-sm ring-1 ring-border/40">
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">

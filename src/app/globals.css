@@ -45,7 +45,7 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.97 0.004 230);
+  --background: #F4F4F5;
   --foreground: oklch(0.24 0.02 240);
   --card: oklch(0.985 0.004 230);
   --card-foreground: oklch(0.24 0.02 240);
@@ -166,4 +166,125 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Scoped professional theme for protected routes */
+.protected-theme {
+  /* Brand-aligned (logo: red → orange → yellow) with neutral canvas */
+  --background: #fbfbfb; /* app background */
+  --foreground: #151515;
+  --card: #ffffff;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: #e53935; /* red */
+  --primary-foreground: #fff6f6;
+  --secondary: #f97316; /* orange */
+  --secondary-foreground: #1f2937;
+  --muted: #f6f7f9; /* cool light gray */
+  --muted-foreground: #6b7280;
+  --accent: #fbbf24; /* yellow */
+  --accent-foreground: #1f2937;
+  --destructive: #d92d20;
+  --border: #e5e7eb; /* neutral border */
+  --input: #f3f4f6;
+  --ring: #ef4444; /* red focus ring */
+  --sidebar: #f9fafb; /* neutral sidebar */
+  --sidebar-foreground: #1f2937;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: var(--sidebar-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+/* Brand utilities for lively accents (scoped by usage) */
+/* (reverted brand gradient utilities) */
+
+.dark .protected-theme {
+  --background: #0f0f10;
+  --foreground: #f5f7fa;
+  --card: #141516;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: #ff5a54;
+  --primary-foreground: #1a0b0b;
+  --secondary: #ff8a1f;
+  --secondary-foreground: #f7fafc;
+  --muted: #1b1c1d;
+  --muted-foreground: #c9d1d9;
+  --accent: #ffd158;
+  --accent-foreground: #0b0c0d;
+  --destructive: #ff645c;
+  --border: #242628;
+  --input: #1f2123;
+  --ring: #ff7a7a;
+  --sidebar: #121314;
+  --sidebar-foreground: #eef2f7;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: #191a1b;
+  --sidebar-accent-foreground: var(--sidebar-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+/* Decorative background and subtle grid for protected area */
+.protected-theme .pro-inset {
+  position: relative;
+  background: transparent;
+}
+.protected-theme .pro-bg {
+  pointer-events: none;
+  z-index: 0;
+  /* Neutral canvas with no brand tint to avoid "fleshy" cast */
+  background: linear-gradient(to bottom, var(--background) 0%, var(--background) 100%);
+}
+
+/* Soft grid overlay */
+.protected-theme .pro-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in oklab, var(--border), transparent 60%) 0px,
+      color-mix(in oklab, var(--border), transparent 60%) 1px,
+      transparent 1px,
+      transparent 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--border), transparent 60%) 0px,
+      color-mix(in oklab, var(--border), transparent 60%) 1px,
+      transparent 1px,
+      transparent 24px
+    );
+  mask-image: radial-gradient(1200px 600px at 50% 0%, black, transparent 75%);
+  opacity: 0.35;
+}
+
+/* Elevated surfaces used in protected main */
+.protected-theme .pro-surface {
+  box-shadow:
+    0 10px 30px rgba(2, 6, 23, 0.06),
+    0 2px 8px rgba(2, 6, 23, 0.04);
+}
+
+/* Minimal, subtle scrollbars */
+.protected-theme *::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.protected-theme *::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--muted-foreground), transparent 30%);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.protected-theme *::-webkit-scrollbar-track {
+  background: transparent;
 }

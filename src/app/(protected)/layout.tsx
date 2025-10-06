@@ -84,23 +84,23 @@ export default async function ProtectedLayout({
   }
 
   return (
-    <SidebarProvider className="bg-muted/15">
+    <SidebarProvider className="protected-theme">
       <a className="skip-nav" href="#main-content">
         Skip to main content
       </a>
       <Sidebar variant="inset" collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-3 px-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-base font-semibold uppercase text-primary">
-              A
+            <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-border/50">
+              <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_30%_20%,var(--primary)_0%,transparent_70%)] opacity-30" />
+              <div className="absolute inset-0 bg-[conic-gradient(from_180deg_at_50%_50%,var(--primary),transparent)] opacity-30" />
+              <span className="relative z-10 text-sm font-semibold uppercase text-primary">A</span>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-sm font-semibold text-foreground">
+              <span className="text-sm font-semibold tracking-tight text-foreground">
                 Acme Response
               </span>
-              <span className="text-xs text-muted-foreground">
-                Operations Console
-              </span>
+              <span className="text-xs text-muted-foreground">Operations Console</span>
             </div>
           </div>
         </SidebarHeader>
@@ -114,8 +114,10 @@ export default async function ProtectedLayout({
           />
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset className="bg-muted/15">
-        <div className="flex min-h-screen flex-1 flex-col gap-8 px-4 pb-12 pt-8 md:px-10">
+      <SidebarInset className="pro-inset">
+        {/* Decorative background */}
+        <div aria-hidden className="pro-bg fixed inset-0" />
+        <div className="relative z-10 flex min-h-screen flex-1 flex-col gap-8 px-4 pb-12 pt-8 md:px-10">
           <TopBar
             datasetLabel="MetroFire Mock · Q1"
             datasetOptions={datasetOptions}
@@ -127,7 +129,7 @@ export default async function ProtectedLayout({
             </div>
             <main
               id="main-content"
-              className="flex-1 overflow-y-auto rounded-xl border border-border/70 bg-background p-6 shadow-md ring-1 ring-border/30 md:p-8"
+              className="pro-surface flex-1 overflow-y-auto rounded-2xl border border-border/60 bg-[#F4F4F5] p-6 shadow-xl ring-1 ring-border/40 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:p-8"
               tabIndex={-1}
             >
               <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
