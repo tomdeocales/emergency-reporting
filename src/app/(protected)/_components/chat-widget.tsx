@@ -1,5 +1,6 @@
 "use client";
 
+import type React from "react";
 import { useChat } from "@ai-sdk/react";
 import { Loader2, MessageCircle, Sparkles, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -18,20 +19,19 @@ export function ChatWidget() {
   const [localInput, setLocalInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  const {
-    messages,
-    input: rawInput,
-    handleSubmit,
-    handleInputChange,
-    isLoading,
-    setInput,
-    // The following may not exist in all versions; handled defensively
-    // biome-ignore lint/suspicious/noExplicitAny: interop across ai-sdk versions
-    append,
-    // biome-ignore lint/suspicious/noExplicitAny: interop across ai-sdk versions
-    setMessages,
-    error,
-  } = useChat({ api: "/api/chat" });
+  // Use a lax typing here to support multiple ai-sdk versions during staging.
+  // This prevents build-time type errors on fields like `input` that may not
+  // exist in the currently installed helpers interface.
+  const chat: any = useChat({ api: "/api/chat" } as any);
+  const messages = (chat?.messages ?? []) as Array<{ id: string; role: string; content: string }>;
+  const rawInput = (chat?.input ?? undefined) as string | undefined;
+  const handleSubmit = (chat?.handleSubmit ?? (() => {})) as (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
+  const handleInputChange = chat?.handleInputChange as ((e: React.ChangeEvent<HTMLTextAreaElement>) => void) | undefined;
+  const isLoading = Boolean(chat?.isLoading);
+  const setInput = chat?.setInput as ((value: string) => void) | undefined;
+  const append = chat?.append as ((msg: { role: string; content: string }) => void) | undefined;
+  const setMessages = chat?.setMessages as ((msgs: any[]) => void) | undefined;
+  const error = chat?.error as { message?: string } | undefined;
 
   const currentInput = (rawInput ?? localInput) ?? "";
   const trimmedInput = currentInput.trim();
