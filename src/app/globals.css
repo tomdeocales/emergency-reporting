@@ -248,7 +248,9 @@
   content: "";
   position: absolute;
   inset: 0;
+  /* Layer order: top fade cover, then vertical + horizontal grid lines */
   background:
+    radial-gradient(1200px 600px at 50% 0%, color-mix(in oklab, var(--background), transparent 0%) 0%, transparent 75%),
     repeating-linear-gradient(
       0deg,
       color-mix(in oklab, var(--border), transparent 60%) 0px,
@@ -263,7 +265,6 @@
       transparent 1px,
       transparent 24px
     );
-  mask-image: radial-gradient(1200px 600px at 50% 0%, black, transparent 75%);
   opacity: 0.35;
 }
 
