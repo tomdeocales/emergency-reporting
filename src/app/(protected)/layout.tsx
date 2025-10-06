@@ -133,7 +133,7 @@ export default async function ProtectedLayout({
             </div>
             <main
               id="main-content"
-              className="pro-surface flex-1 overflow-y-auto rounded-2xl border border-border/60 bg-[#F4F4F5] p-6 shadow-xl ring-1 ring-border/40 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:p-8"
+              className="pro-surface flex-1 overflow-y-auto rounded-2xl border border-border/60 bg-[#f9f9f9] p-6 shadow-xl ring-1 ring-border/40 backdrop-blur supports-[backdrop-filter]:backdrop-blur md:p-8"
               tabIndex={-1}
             >
               <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
