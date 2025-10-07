@@ -69,13 +69,13 @@ export function DataExportsPanel({ assets }: { assets: DataAsset[] }) {
     <div className="space-y-4 rounded-xl border border-border bg-background p-4 shadow-sm">
       <header className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold text-foreground">Exports</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm leading-6 text-muted-foreground">
           Package datasets for partners or capture snapshots for compliance.
         </p>
       </header>
       <div className="flex flex-wrap items-end gap-3">
         <label className="flex flex-col text-sm" htmlFor="data-export-select">
-          <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <span className="text-sm font-medium tracking-wide text-muted-foreground">
             Dataset
           </span>
           <select

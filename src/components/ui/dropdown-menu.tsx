@@ -41,7 +41,7 @@ const DropdownMenuSubContent = forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      "z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-lg",
+      "z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-white p-1 text-foreground shadow-lg",
       className,
     )}
     {...props}
@@ -59,7 +59,7 @@ const DropdownMenuContent = forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "z-50 min-w-[12rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md",
+        "z-50 min-w-[12rem] overflow-hidden rounded-md border border-border bg-white p-1 text-foreground shadow-md",
         className,
       )}
       {...props}

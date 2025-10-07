@@ -66,7 +66,7 @@ export function TopBar({
       <div className="flex items-center gap-3 md:gap-4">
         <SidebarTrigger className="md:hidden" />
         <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <Radio className="h-4 w-4 text-primary" aria-hidden />
+          <Radio className="h-5 w-5 text-primary" aria-hidden />
           Live Dataset
         </div>
         <div className="hidden h-4 w-px bg-border md:block" aria-hidden />
@@ -77,7 +77,7 @@ export function TopBar({
         />
         <span
           className={cn(
-            "inline-flex items-center gap-2 rounded-full border px-2.5 py-0.5 text-xs font-semibold shadow-sm",
+            "inline-flex items-center gap-2 rounded-full border px-3 py-0.5 text-sm font-semibold shadow-sm",
             status.tone === "idle" &&
               "border-border/60 bg-muted text-muted-foreground",
             status.tone === "validating" &&
@@ -143,7 +143,7 @@ function DatasetDropdown({
                   {dataset.label}
                 </span>
                 {dataset.description ? (
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-sm text-muted-foreground">
                     {dataset.description}
                   </span>
                 ) : null}

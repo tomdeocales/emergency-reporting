@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -89,26 +91,27 @@ export default async function ProtectedLayout({
         Skip to main content
       </a>
       <Sidebar variant="inset" collapsible="icon">
-        <SidebarHeader>
-          <div className="flex items-center gap-3 px-2">
-            <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-border/50">
-              <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_30%_20%,var(--primary)_0%,transparent_70%)] opacity-30" />
-              <div className="absolute inset-0 bg-[conic-gradient(from_180deg_at_50%_50%,var(--primary),transparent)] opacity-30" />
-              <span className="relative z-10 text-sm font-semibold uppercase text-primary">
-                A
-              </span>
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="text-sm font-semibold tracking-tight text-foreground">
-                Acme Response
-              </span>
-              <span className="text-xs text-muted-foreground">
-                Operations Console
-              </span>
-            </div>
-          </div>
+        <SidebarHeader className="flex flex-col items-center gap-2 px-0">
+          <Link
+            href="/"
+            aria-label="Return to landing page"
+            className="flex w-full items-center justify-center px-4 pt-4"
+          >
+            <Image
+              src="/branding/emergencyreporting-1.png"
+              alt="Emergency Reporting"
+              width={160}
+              height={48}
+              className="h-10 w-auto object-contain"
+              priority
+            />
+          </Link>
+          <span className="text-sm font-semibold tracking-wide text-muted-foreground">
+            Emergency Reporting
+          </span>
+          <div className="mx-8 h-px w-full max-w-[160px] border-b border-border/60" />
         </SidebarHeader>
-        <SidebarContent className="pt-4">
+        <SidebarContent className="pt-1">
           <SidebarNav items={navItems} />
         </SidebarContent>
         <SidebarFooter className="pt-4">

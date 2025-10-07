@@ -153,7 +153,7 @@ export function ChatWidget() {
               <p className="text-sm font-medium text-foreground">
                 AI Assistant
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 Powered by Context7 — ask for summaries, action items, or
                 context.
               </p>
@@ -211,7 +211,7 @@ export function ChatWidget() {
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="rounded-md text-xs"
+                        className="rounded-md text-sm"
                         onClick={() => {
                           if (MOCK_MODE) {
                             submitMock(prompt);
@@ -228,7 +228,7 @@ export function ChatWidget() {
                 </div>
               )}
               {error ? (
-                <p className="mt-3 rounded-md border border-destructive/60 bg-destructive/10 px-3 py-2 text-xs text-destructive">
+                <p className="mt-3 rounded-md border border-destructive/60 bg-destructive/10 px-3 py-2 text-sm text-destructive">
                   {error.message ||
                     "We hit a snag reaching Context7. Try again shortly."}
                 </p>
@@ -265,12 +265,12 @@ export function ChatWidget() {
                   )}
                 </Button>
               </div>
-              <div className="mt-2 hidden gap-2 text-xs text-muted-foreground sm:flex">
+              <div className="mt-2 hidden gap-2 text-sm text-muted-foreground sm:flex">
                 {SUGGESTED_PROMPTS.map((prompt) => (
                   <button
                     key={`suggestion-${prompt}`}
                     type="button"
-                    className="rounded-md bg-muted px-3 py-1 text-xs transition hover:bg-muted/60"
+                    className="rounded-md bg-muted px-3 py-1 text-sm transition hover:bg-muted/60"
                     onClick={() => setInputValue(prompt)}
                   >
                     {prompt}

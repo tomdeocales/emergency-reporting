@@ -70,7 +70,7 @@ export default function LandingPage() {
             Coordinate incident response with confidence—even when you are
             offline.
           </h1>
-          <p className="text-base text-muted-foreground sm:text-lg">
+          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
             This guided preview mirrors the live environment used by dispatch
             supervisors to review incidents, map hotspots, and configure
             escalation alerts. All data is mocked so you can explore the flows
@@ -89,7 +89,7 @@ export default function LandingPage() {
             size="lg"
             variant="outline"
             asChild
-            className="border-red-200 text-red-700 hover:bg-red-50 dark:border-red-800/60 dark:text-red-300 dark:hover:bg-red-900/20"
+            className="border-[#EAB308] text-[black] hover:bg-[white] dark:border-[#FACC15]/70 dark:text-[#FACC15] dark:hover:bg-[#fff7ea]"
           >
             <Link href="#capabilities">View capabilities</Link>
           </Button>

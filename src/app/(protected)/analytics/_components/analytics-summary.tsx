@@ -7,7 +7,7 @@ export function AnalyticsSummary({ metrics }: { metrics: AnalyticsMetric[] }) {
       {metrics.map((metric) => (
         <Card key={metric.id}>
           <CardHeader className="space-y-2">
-            <CardTitle className="text-base font-semibold text-muted-foreground">
+            <CardTitle className="text-base font-semibold tracking-tight text-muted-foreground">
               {metric.label}
             </CardTitle>
           </CardHeader>

@@ -33,7 +33,7 @@ export function TimelineScrubber({
     <div className="space-y-4 rounded-xl border border-border bg-muted/10 p-5 shadow-sm ring-1 ring-border/40">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             Timeline scrubber
           </p>
           <p className="text-sm text-muted-foreground">
@@ -53,7 +53,7 @@ export function TimelineScrubber({
         </Button>
       </div>
       <div className="flex items-center gap-4">
-        <span className="shrink-0 text-xs text-muted-foreground">
+        <span className="shrink-0 text-sm text-muted-foreground">
           {startLabel}
         </span>
         <input
@@ -66,7 +66,7 @@ export function TimelineScrubber({
           aria-label="Incident timeline scrubber"
           className="h-1 w-full cursor-pointer appearance-none rounded-full bg-border accent-primary"
         />
-        <span className="shrink-0 text-xs text-muted-foreground">
+        <span className="shrink-0 text-sm text-muted-foreground">
           {endLabel}
         </span>
       </div>

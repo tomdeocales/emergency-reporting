@@ -47,7 +47,7 @@ export function ExportPanel({ rows }: { rows: AnalyticsExportRow[] }) {
     <div className="space-y-4 rounded-xl border border-border bg-background p-4 shadow-sm">
       <header className="flex flex-col gap-1">
         <h2 className="text-lg font-semibold">Exports</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm leading-6 text-muted-foreground">
           Generate CSV, JSON, or preview chart snapshots straight from the trend
           datasets.
         </p>

@@ -78,8 +78,12 @@ export function ZoneDetailPanel({ zone }: { zone: EmergencyZone }) {
               <TableRow key={incident.id}>
                 <TableCell className="font-medium">{incident.id}</TableCell>
                 <TableCell>{incident.type}</TableCell>
-                <TableCell>{incident.priority}</TableCell>
-                <TableCell>{incident.status}</TableCell>
+                <TableCell className="font-semibold">
+                  {incident.priority}
+                </TableCell>
+                <TableCell className="font-medium text-foreground">
+                  {incident.status}
+                </TableCell>
                 <TableCell>{formatTimestamp(incident.reportedAt)}</TableCell>
               </TableRow>
             ))}

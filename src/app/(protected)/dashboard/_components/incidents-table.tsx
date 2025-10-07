@@ -26,7 +26,7 @@ export function IncidentsTable({ incidents }: { incidents: IncidentRecord[] }) {
 
   return (
     <div className="rounded-xl border border-border ring-1 ring-border/40">
-      <Table>
+      <Table className="leading-6">
         <TableHeader>
           <TableRow>
             <TableHead>ID</TableHead>

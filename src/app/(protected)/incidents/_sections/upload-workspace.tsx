@@ -534,12 +534,12 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-medium">{issue.message}</span>
-                        <span className="text-xs uppercase tracking-wide text-muted-foreground">
+                        <span className="text-sm tracking-wide text-muted-foreground">
                           {issue.severity}
                         </span>
                       </div>
                       {issue.context ? (
-                        <p className="mt-1 text-xs text-muted-foreground">
+                        <p className="mt-1 text-sm text-muted-foreground">
                           {issue.context}
                         </p>
                       ) : null}
@@ -560,7 +560,7 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
           </CardHeader>
           <CardContent>
             <div className="flex h-52 flex-col justify-between rounded-md border border-border/60 bg-muted/30 p-4 text-sm text-muted-foreground">
-              <div className="text-xs uppercase tracking-wide text-muted-foreground">
+              <div className="text-sm tracking-wide text-muted-foreground">
                 City overlay (mock)
               </div>
               {coordinateSummary ? (
@@ -577,7 +577,7 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
                     {formatCoordinate(coordinateSummary.bounds.east, "lon")} /{" "}
                     {formatCoordinate(coordinateSummary.bounds.west, "lon")}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     {coordinateSummary.count} incident(s) contain valid
                     coordinates.
                   </p>
@@ -645,9 +645,7 @@ export function UploadWorkspace({ incidents, quality }: UploadWorkspaceProps) {
 function Metric({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-md border border-border/60 bg-background p-3">
-      <div className="text-xs uppercase tracking-wide text-muted-foreground">
-        {label}
-      </div>
+      <div className="text-sm tracking-wide text-muted-foreground">{label}</div>
       <div className="mt-1 text-base font-semibold text-foreground">
         {value}
       </div>
